@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롤로그 — 만화하려고 돈 벌었는데 IT기획자가 되어버렸다 | JINK Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #00d564;
+    --primary-light: #e8faf2;
+    --primary-dark: #00a84c;
+    --accent: #ff6b6b;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555;
+    --text-muted: #999;
+    --border: #e8e8e8;
+    --bg: #ffffff;
+    --bg-sub: #f8f8f8;
+    --bg-dark: #1a1a1a;
+    --star: #f5c518;
+    --width: 960px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+  }
+
+  /* ── 헤더 ── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px; height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 1.1rem; font-weight: 900; color: var(--primary); }
+  .breadcrumb { font-size: 0.8rem; color: var(--text-muted); }
+  .breadcrumb span { color: var(--text-primary); font-weight: 500; }
+  .back-btn {
+    font-size: 0.8rem; color: var(--text-secondary);
+    text-decoration: none; display: flex; align-items: center; gap: 4px;
+    transition: color 0.15s;
+  }
+  .back-btn:hover { color: var(--primary); }
+
+  /* ── 컨테이너 ── */
+  .container {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 0 40px 0;
+  }
+
+  /* ── 에피소드 헤더 ── */
+  .hero {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .episode-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg-dark); color: var(--primary);
+    font-size: 0.72rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 20px;
+    letter-spacing: 0.05em; margin-bottom: 16px;
+  }
+  .episode-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+  .hero-title {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 900; line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .hero-sub { font-size: 0.9rem; color: var(--text-muted); }
+
+  /* ── 웹툰 뷰어 ── */
+  .viewer-wrap {
+    background: #111;
+    margin: 0 -40px;
+    padding: 20px 0;
+  }
+  .viewer {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .page {
+    display: block; width: 100%;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .page.visible { opacity: 1; transform: none; }
+  .page img { display: block; width: 100%; height: auto; }
+  .page-gap { height: 6px; background: #0a0a0a; }
+
+  /* ── 채용 배너 ── */
+  .hire-banner {
+    background: var(--bg-dark);
+    margin: 0 -40px;
+    padding: 0 40px;
+  }
+  .hire-banner-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 20px;
+  }
+  .hire-left { display: flex; align-items: center; gap: 14px; }
+  .hire-emoji { font-size: 1.8rem; }
+  .hire-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .hire-sub { font-size: 0.78rem; color: #aaa; }
+  .hire-right { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+  .hire-tag {
+    font-size: 0.72rem; padding: 5px 12px;
+    border-radius: 20px; border: 1px solid #444;
+    color: #ccc; white-space: nowrap;
+  }
+  .hire-tag.green {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(0,213,100,0.08);
+  }
+
+  /* ── 에피소드 푸터 ── */
+  .episode-footer { margin-top: 0; border-top: 1px solid var(--border); }
+  .rating-section {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .rating-left { display: flex; align-items: center; gap: 10px; }
+  .rating-stars { display: flex; gap: 2px; }
+  .star { font-size: 1.3rem; color: var(--star); }
+  .rating-num { font-size: 1.1rem; font-weight: 900; color: var(--text-primary); }
+  .rating-count { font-size: 0.78rem; color: var(--text-muted); }
+  .rating-btn {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 6px;
+    padding: 8px 18px; font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.15s;
+  }
+  .rating-btn:hover { background: #e05555; }
+
+  .author-comment { padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .author-comment-label {
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--text-muted); letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .author-comment-text {
+    font-size: 0.9rem; color: var(--text-secondary);
+    line-height: 1.8; word-break: keep-all;
+    padding-left: 12px; border-left: 3px solid var(--primary);
+  }
+
+  .episode-nav {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 40px;
+  }
+  .ep-nav-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.9rem; font-weight: 600;
+    color: var(--text-primary); text-decoration: none;
+    padding: 8px 16px; border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .ep-nav-btn:hover { background: var(--bg-sub); color: var(--primary); }
+  .ep-nav-btn.center { color: var(--text-secondary); font-size: 0.85rem; }
+  .ep-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="header-left">
+    <div class="logo">JINK</div>
+    <div class="breadcrumb">포트폴리오 / <span>프롤로그</span></div>
+  </div>
+  <a href="portfolio_webtoon.html" class="back-btn">← 목록으로</a>
+</header>
+
+<div class="container">
+
+  <!-- 에피소드 헤더 -->
+  <div class="hero">
+    <div class="episode-badge">
+      <span class="dot"></span>
+      PROLOGUE
+    </div>
+    <h1 class="hero-title">만화하려고 돈 벌었는데<br>IT기획자가 되어버렸다</h1>
+    <p class="hero-sub">기획자 L씨의 흑역사</p>
+  </div>
+
+</div>
+
+<!-- 웹툰 뷰어 (풀블리드 검정) -->
+<div class="viewer-wrap">
+  <div class="viewer" id="viewer">
+    <div class="page" id="p1">
+      <img src="images/prologue_01.png" alt="프롤로그 1페이지" loading="lazy">'
+    </div>
+    <div class="page-gap"></div>
+    <div class="page" id="p2">
+      <img src="images/prologue_02.png" alt="프롤로그 2페이지" loading="lazy">'
+    </div>
+    <div class="page-gap"></div>
+    <div class="page" id="p3">
+      <img src="images/prologue_03.png" alt="프롤로그 3페이지" loading="lazy">'
+    </div>
+    <div class="page-gap"></div>
+    <div class="page" id="p4">
+      <img src="images/prologue_04.png" alt="프롤로그 4페이지" loading="lazy">'
+    </div>
+    <div class="page-gap"></div>
+    <div class="page" id="p5">
+      <img src="images/prologue_05.png" alt="프롤로그 5페이지" loading="lazy">'
+    </div>
+    <div class="page-gap"></div>
+    <div class="page" id="p6">
+      <img src="images/prologue_06.png" alt="프롤로그 6페이지" loading="lazy">'
+    </div>
+    <div class="page-gap"></div>
+    <div class="page" id="p7">
+      <img src="images/prologue_07.png" alt="프롤로그 7페이지" loading="lazy">'
+    </div>
+  </div>
+</div>
+
+<!-- 채용 배너 -->
+<div class="hire-banner">
+  <div class="hire-banner-inner">
+    <div class="hire-left">
+      <div class="hire-emoji">✏️</div>
+      <div class="hire-text">
+        <div class="hire-title">이진경을 뽑아주세요</div>
+        <div class="hire-sub">만화 덕후 · 웹툰 플랫폼 구축 · 15년차 PM</div>
+      </div>
+    </div>
+    <div class="hire-right">
+      <span class="hire-tag">즉시 출근 가능</span>
+      <span class="hire-tag green">커피 한 잔 사드립니다</span>
+    </div>
+  </div>
+</div>
+
+<!-- 별점 + 작가의 한마디 + 네비 -->
+<div class="container">
+  <div class="episode-footer">
+
+    <div class="rating-section">
+      <div class="rating-left">
+        <div class="rating-stars">
+          <span class="star">★</span><span class="star">★</span>
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="rating-num">9.99</div>
+        <div class="rating-count">면접관 참여 대기중</div>
+      </div>
+      <button class="rating-btn">별점주기</button>
+    </div>
+
+    <div class="author-comment">
+      <div class="author-comment-label">작가의 한마디</div>
+      <div class="author-comment-text">
+        만화를 하려고 돈을 벌었는데, 돈을 벌다 보니 만화를 만들게 됐다.<br>
+        그리고 지금 또 만화를 만들 수 있는 곳에 지원하고 있다.
+      </div>
+    </div>
+
+    <div class="episode-nav">
+      <span class="ep-nav-btn disabled">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        이전화
+      </span>
+      <a href="portfolio_webtoon.html" class="ep-nav-btn center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        목록
+      </a>
+      <a href="portfolio_kdh.html" class="ep-nav-btn">
+        다음화
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const pages = document.querySelectorAll('.page');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+pages.forEach(p => obs.observe(p));
+if (pages[0]) pages[0].classList.add('visible');
+</script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에필로그 — Cover Letter | JINK Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(180deg,
+      #f5f0e8 0%,
+      #e8dfc8 20%,
+      #c4b090 45%,
+      #7b5ea7 70%,
+      #3d1f6e 85%,
+      #1a0a3d 100%
+    );
+  }
+
+  /* ── 헤더 ── */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,240,232,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #d4c4a0;
+    padding: 0 40px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo { font-size: 1.1rem; font-weight: 900; color: #00d564; }
+  .breadcrumb { font-size: 0.8rem; color: #999; }
+  .breadcrumb span { color: #1a1a1a; font-weight: 500; }
+  .back-btn {
+    font-size: 0.8rem;
+    color: #666;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+  }
+  .back-btn:hover { color: #00d564; }
+
+  /* ── 메인 컨테이너 ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 40px 0;
+  }
+
+  /* ── 에피소드 배지 ── */
+  .episode-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #3d1f6e;
+    color: #c9a84c;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    border: 1px solid #c9a84c44;
+  }
+  .episode-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #c9a84c; }
+
+  /* ── 섹션 타이틀 ── */
+  .section-label {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2a1a0a;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .section-sub {
+    font-size: 0.88rem;
+    color: #888;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  /* ── 오각형 역량 그리드 ── */
+  .pentagon-section {
+    margin-bottom: 60px;
+  }
+  .pentagon-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #7b5ea7;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .capability-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  @media(max-width: 640px) { .capability-grid { grid-template-columns: repeat(3, 1fr); } }
+  .cap-card {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid #d4c4a0;
+    border-top: 3px solid #c9a84c;
+    border-radius: 8px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+  .cap-icon { font-size: 1.5rem; margin-bottom: 6px; }
+  .cap-label { font-size: 0.75rem; font-weight: 700; color: #2a1a0a; }
+  .cap-sub { font-size: 0.68rem; color: #888; margin-top: 3px; }
+
+  /* ── 양피지 커버레터 ── */
+  .parchment-wrap {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto 60px;
+  }
+  .parchment-bg {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.3));
+  }
+  .parchment-text {
+    position: absolute;
+    top: 12%;
+    left: 13%;
+    right: 13%;
+    bottom: 12%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    overflow: hidden;
+  }
+  .cover-greeting {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.75rem, 1.8vw, 1rem);
+    font-weight: 700;
+    color: #2a1a0a;
+    text-align: center;
+    margin-bottom: 0.8em;
+    letter-spacing: 0.05em;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 1px;
+    background: #c9a84c;
+    margin: 0 auto 1em;
+  }
+  .cover-body {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.62rem, 1.4vw, 0.82rem);
+    color: #3a2a1a;
+    line-height: 1.9;
+    word-break: keep-all;
+    margin-bottom: 0.8em;
+  }
+  .cover-body strong { color: #2a1a0a; font-weight: 700; }
+  .cover-highlight {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.6rem, 1.3vw, 0.78rem);
+    color: #5a3a1a;
+    line-height: 1.8;
+    word-break: keep-all;
+    margin-bottom: 0.8em;
+    padding: 0.6em 0.8em;
+    background: rgba(201,168,76,0.1);
+    border-left: 2px solid #c9a84c;
+  }
+  .cover-closing {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.62rem, 1.4vw, 0.82rem);
+    color: #3a2a1a;
+    line-height: 1.9;
+    word-break: keep-all;
+    margin-bottom: 0.8em;
+  }
+  .cover-sign {
+    text-align: right;
+    margin-top: 0.5em;
+  }
+  .cover-sign .sign-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.72rem, 1.6vw, 0.92rem);
+    font-weight: 700;
+    color: #2a1a0a;
+  }
+  .cover-sign .sign-sub {
+    font-size: clamp(0.58rem, 1.2vw, 0.72rem);
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* ── 에피소드 푸터 ── */
+  .episode-footer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+  .rating-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .rating-left { display: flex; align-items: center; gap: 10px; }
+  .rating-stars { display: flex; gap: 2px; }
+  .star { font-size: 1.3rem; color: #c9a84c; }
+  .rating-num { font-size: 1.1rem; font-weight: 900; color: #fff; }
+  .rating-count { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+  .rating-btn {
+    background: #c9a84c;
+    color: #1a0a3d;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .author-comment {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .author-comment-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .author-comment-text {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.8;
+    word-break: keep-all;
+    padding-left: 12px;
+    border-left: 3px solid #c9a84c;
+  }
+  .episode-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+  .ep-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .ep-nav-btn:hover { background: rgba(255,255,255,0.1); color: #c9a84c; }
+  .ep-nav-btn.center { font-size: 0.85rem; }
+
+  /* ── 라이선스 ── */
+  .license-bar {
+    background: rgba(0,0,0,0.4);
+    padding: 20px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    margin-top: 20px;
+  }
+  .license-text {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+  .license-text span { color: rgba(201,168,76,0.6); }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="header">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="logo">JINK</div>
+    <div class="breadcrumb">포트폴리오 / <span>에필로그 · Cover Letter</span></div>
+  </div>
+  <a href="portfolio_webtoon.html" class="back-btn">← 목록으로</a>
+</header>
+
+<div class="container">
+
+  <div style="text-align:center;margin-bottom:40px;">
+    <div class="episode-badge">
+      <span class="dot"></span>
+      에필로그
+    </div>
+    <div class="section-label">Cover Letter</div>
+    <div class="section-sub">이진경 · PM/PO · 15년차</div>
+  </div>
+
+  <!-- 오각형 역량 -->
+  <div class="pentagon-section">
+    <div class="pentagon-title">왜 이진경인가 — 5가지 교집합</div>
+    <div class="capability-grid">
+      <div class="cap-card">
+        <div class="cap-icon">📚</div>
+        <div class="cap-label">만화 덕후</div>
+        <div class="cap-sub">만화책 3,000권+<br>웹툰 월 3만원</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🚀</div>
+        <div class="cap-label">0 → 1</div>
+        <div class="cap-sub">다이어터·군장병<br>티스토어웹툰</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">📈</div>
+        <div class="cap-label">그로스</div>
+        <div class="cap-sub">매출 10배·GMV 2억<br>데이터 기반</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🗂️</div>
+        <div class="cap-label">PM · 팀리드</div>
+        <div class="cap-sub">멀티벤더 조율<br>유닛리드 경험</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">✏️</div>
+        <div class="cap-label">서비스 기획</div>
+        <div class="cap-sub">헬스케어·핀테크<br>OTT·콘텐츠</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 양피지 커버레터 -->
+  <div class="parchment-wrap">
+    <img src="images/parchment.png" class="parchment-bg" alt="양피지 배경">
+    <div class="parchment-text">
+      <div class="cover-greeting">안녕하세요, 이진경입니다</div>
+      <div class="cover-divider"></div>
+
+      <div class="cover-body">
+        이 포트폴리오는 리얼드로우에 지원하기 위해 새로운 형태로 만들었습니다.<br>
+        기획서를 쓰듯 AI에게 컨텍스트를 주고, 이미지를 생성하고, HTML을 짜고,<br>
+        <strong>웹툰 형식으로 구조화했습니다.</strong><br>
+        도구를 쓸 줄 안다는 걸 말이 아니라 결과물로 보여드리고 싶었습니다.
+      </div>
+
+      <div class="cover-highlight">
+        저는 다섯 가지를 동시에 갖춘 사람이 드물다고 생각합니다.<br>
+        만화책 3,000권 이상의 만화 덕후이면서, 피처폰 시대부터 웹툰 플랫폼을 직접 구축한 PM이고,
+        0→1 서비스를 여러 번 만들었으며, 데이터로 그로스를 만든 경험이 있고,
+        지금도 현역으로 서비스를 기획하고 있습니다.
+      </div>
+
+      <div class="cover-body">
+        리얼드로우의 공고를 보고 이 다섯 가지가 전부 필요한 자리라는 걸 알았습니다.<br>
+        저는 2012년에 클리프행어 스토리텔링으로 모바일 만화 매출을 3개월 만에 2.6배 올렸고,
+        피처폰 만화를 웹툰으로 재가공해 티스토어 웹툰 플랫폼을 구축했습니다.<br>
+        그리고 지금도 그 질문 — <strong>콘텐츠 제작 파이프라인을 어떻게 효율화할 것인가</strong> —
+        이 해결되지 않았다고 생각합니다.
+      </div>
+
+      <div class="cover-closing">
+        리얼드로우가 AI로 그 답을 만들고 있다면, 저는 그 과정에 있고 싶습니다.<br>
+        온갖 끼를 다 부리며 지원합니다. 부디 잘 부탁드립니다.
+      </div>
+
+      <div class="cover-sign">
+        <div class="sign-name">이진경 드림</div>
+        <div class="sign-sub"> · 2026년 3월</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 에피소드 푸터 -->
+<div class="episode-footer">
+  <div class="rating-section">
+    <div class="rating-left">
+      <div class="rating-stars">
+        <span class="star">★</span><span class="star">★</span>
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <div class="rating-num">9.99</div>
+      <div class="rating-count">면접관 참여 대기중</div>
+    </div>
+    <button class="rating-btn">채용하기</button>
+  </div>
+
+  <div class="author-comment">
+    <div class="author-comment-label">작가의 한마디</div>
+    <div class="author-comment-text">
+      만화를 하려고 돈을 벌었는데, 돈을 벌다 보니 만화를 만들게 됐다.<br>
+      그리고 지금 또 만화를 만들 수 있는 곳에 지원하고 있다.<br>
+      인생이 결국 한 방향으로 흘렀다.
+    </div>
+  </div>
+
+  <div class="episode-nav">
+    <a href="portfolio_zigbang.html" class="ep-nav-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      이전화
+    </a>
+    <a href="portfolio_webtoon.html" class="ep-nav-btn center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      목록
+    </a>
+    <div style="width:80px;"></div>
+  </div>
+</div>
+
+<!-- 라이선스 -->
+<div class="license-bar">
+  <div class="license-text">
+    This portfolio was created with <span>Claude</span> & <span>Gemini</span>
+    &nbsp;·&nbsp;

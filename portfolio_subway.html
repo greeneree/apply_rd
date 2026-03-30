@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3화 — 지하철 앱 | JINK Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #00d564;
+    --primary-light: #e8faf2;
+    --primary-dark: #00a84c;
+    --accent: #ff6b6b;
+    --warning: #f59e0b;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555;
+    --text-muted: #999;
+    --border: #e8e8e8;
+    --bg: #ffffff;
+    --bg-sub: #f8f8f8;
+    --bg-dark: #1a1a1a;
+    --star: #f5c518;
+    --width: 960px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+  }
+
+  /* ── 헤더 ── */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 1.1rem; font-weight: 900; color: var(--primary); }
+  .breadcrumb { font-size: 0.8rem; color: var(--text-muted); }
+  .breadcrumb span { color: var(--text-primary); font-weight: 500; }
+  .back-btn {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .back-btn:hover { color: var(--primary); }
+
+  /* ── 메인 컨테이너 ── */
+  .container {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── 히어로 섹션 ── */
+  .hero {
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .episode-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-dark);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+  .episode-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+  .hero-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    word-break: keep-all;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .meta-value { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+
+  /* ── KPI 그리드 ── */
+  .kpi-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media(max-width: 700px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+  .kpi-card {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--primary);
+  }
+  .kpi-num {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .kpi-num span { font-size: 1rem; color: var(--primary); }
+  .kpi-desc { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; }
+  .kpi-context { font-size: 0.7rem; color: var(--warning); font-style: italic; }
+
+  /* ── 개요 섹션 ── */
+  .overview-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  @media(max-width: 640px) { .overview-grid { grid-template-columns: 1fr; } }
+  .overview-block h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .overview-block p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    word-break: keep-all;
+  }
+
+  /* ── 인사이트 박스 ── */
+  .insight-box {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    line-height: 1.8;
+    word-break: keep-all;
+  }
+  .insight-box strong { color: var(--primary-dark); }
+
+  /* ── 문제 해결 섹션 ── */
+  .problem-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .problem-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .problem-header {
+    background: var(--bg-dark);
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .problem-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-header h3 { font-size: 0.95rem; font-weight: 700; }
+  .problem-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  @media(max-width: 640px) { .problem-body { grid-template-columns: 1fr; } }
+  .problem-cell {
+    padding: 18px 20px;
+    border-right: 1px solid var(--border);
+  }
+  .problem-cell:last-child { border-right: none; }
+  .cell-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .cell-label.situation { color: #ef4444; }
+  .cell-label.analysis { color: var(--warning); }
+  .cell-label.result { color: var(--primary-dark); }
+  .problem-cell p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7; word-break: keep-all; }
+
+  /* ── 데이터 분석 섹션 ── */
+  .data-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .data-highlight {
+    background: var(--bg-dark);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    color: #fff;
+  }
+  .data-highlight .big-num {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .data-highlight .big-label {
+    font-size: 0.88rem;
+    color: #aaa;
+    margin-top: 4px;
+    margin-bottom: 16px;
+  }
+  .data-highlight p { font-size: 0.88rem; color: #ccc; line-height: 1.8; word-break: keep-all; }
+  .data-highlight strong { color: #fff; }
+
+  /* ── 가설 전환 플로우 ── */
+  .flow-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .flow-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0;
+  }
+  .flow-step {
+    background: var(--primary-light);
+    border: 1px solid #b3e8ce;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    color: var(--primary-dark);
+    font-weight: 500;
+    word-break: keep-all;
+  }
+  .flow-arrow { color: var(--primary); font-size: 1.1rem; font-weight: 700; }
+
+  /* ── 미검증 가설 박스 ── */
+  .unverified-box {
+    background: #fff8e8;
+    border: 1px solid #f5c518;
+    border-left: 4px solid #f5c518;
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .unverified-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--warning);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .unverified-box p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; word-break: keep-all; }
+  .unverified-box strong { color: var(--text-primary); }
+
+  /* ── Lesson Learned ── */
+  .lesson-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .lesson-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media(max-width: 640px) { .lesson-grid { grid-template-columns: 1fr; } }
+  .lesson-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .lesson-card.keep { border-top: 3px solid var(--primary); }
+  .lesson-card.fix { border-top: 3px solid var(--warning); }
+  .lesson-card h3 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .lesson-card.keep h3 { color: var(--primary-dark); }
+  .lesson-card.fix h3 { color: var(--warning); }
+  .lesson-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+  .lesson-item::before {
+    content: '·';
+    color: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── 웰다 연결 섹션 ── */
+  .connect-section {
+    padding: 40px 0;
+    background: var(--bg-sub);
+    margin: 40px -40px 0;
+    padding: 40px;
+  }
+  .connect-box {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .connect-box .connect-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.5;
+    word-break: keep-all;
+  }
+  .connect-box p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    word-break: keep-all;
+  }
+  .connect-box strong { color: var(--primary-dark); }
+
+  /* ── 태그 ── */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .tag {
+    font-size: 0.72rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    background: var(--bg);
+  }
+
+  /* ── 네비게이션 ── */
+  .nav-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .nav-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .nav-btn .nav-label { font-size: 0.7rem; color: var(--text-muted); }
+  .nav-btn .nav-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+  .nav-btn:hover .nav-title { color: var(--primary); }
+  .nav-btn.next { text-align: right; }
+
+  /* ── 에피소드 푸터 ── */
+  .episode-footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+  .rating-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .rating-left { display: flex; align-items: center; gap: 10px; }
+  .rating-stars { display: flex; gap: 2px; }
+  .star { font-size: 1.3rem; color: var(--star); }
+  .rating-num { font-size: 1.1rem; font-weight: 900; color: var(--text-primary); }
+  .rating-count { font-size: 0.78rem; color: var(--text-muted); }
+  .rating-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.15s;
+  }
+  .rating-btn:hover { background: #e05555; }
+  .author-comment {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .author-comment-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .author-comment-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    word-break: keep-all;
+    padding-left: 12px;
+    border-left: 3px solid var(--primary);
+  }
+  .episode-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 40px;
+  }
+  .ep-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .ep-nav-btn:hover { background: var(--bg-sub); color: var(--primary); }
+  .ep-nav-btn.center { color: var(--text-secondary); font-size: 0.85rem; }
+
+  /* ── 채용 배너 ── */
+  .hire-banner {
+    background: var(--bg-dark);
+    margin: 0 -40px;
+    padding: 0 40px;
+  }
+  .hire-banner-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .hire-left { display: flex; align-items: center; gap: 14px; }
+  .hire-emoji { font-size: 1.8rem; }
+  .hire-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .hire-sub { font-size: 0.78rem; color: #aaa; }
+  .hire-right { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+  .hire-tag {
+    font-size: 0.72rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid #444;
+    color: #ccc;
+    white-space: nowrap;
+  }
+  .hire-tag.green {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(0,213,100,0.08);
+  }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="header-left">
+    <div class="logo">JINK</div>
+    <div class="breadcrumb">포트폴리오 / <span>3화 · 지하철 앱</span></div>
+  </div>
+  <a href="portfolio_webtoon.html" class="back-btn">
+    ← 목록으로
+  </a>
+</header>
+
+<div class="container">
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="episode-badge">
+      <span class="dot"></span>
+      3화
+    </div>
+    <h1 class="hero-title">지하철 앱<br>— 로드뷰에서 에스컬레이터 위치를 찾던 사람들</h1>
+    <p class="hero-sub">말랑 (옐로모바일 계열) · 지하철 앱 유닛리드 PM</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">역할</span>
+        <span class="meta-value">유닛리드 PM · 서비스 기획 · 수익화</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">기간</span>
+        <span class="meta-value">2014 — 2015</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">플랫폼</span>
+        <span class="meta-value">iOS · Android</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">도메인</span>
+        <span class="meta-value">교통 · 생활편의 · 수익화</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">회사</span>
+        <span class="meta-value">말랑 (옐로모바일 계열)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- KPI -->
+  <section class="kpi-section">
+    <div class="section-title">핵심 지표</div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">10<span>배</span></div>
+        <div class="kpi-desc">광고 매출 성장</div>
+        <div class="kpi-context">월 300만 → 월 3,000만원 (3년)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">CPA</div>
+        <div class="kpi-desc">광고 수익화 모델 도입</div>
+        <div class="kpi-context">교통비 벌기 테마 기획 · 직접 설계</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">ROI<span>흑자</span></div>
+        <div class="kpi-desc">팀 인건비 ROI 달성</div>
+        <div class="kpi-context">기획 1 · 디자인 1 · 개발 3인 커버</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">0<span>→1</span></div>
+        <div class="kpi-desc">유닛 독립 목적조직 리딩</div>
+        <div class="kpi-context">기획·디자인·개발 한 앱 귀속 구조</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 개요 -->
+  <section class="overview-section">
+    <div class="section-title">프로젝트 개요</div>
+    <div class="overview-grid">
+      <div class="overview-block">
+        <h3>배경</h3>
+        <p>옐로모바일 산하 말랑에서 지하철 앱 유닛리드를 담당. 기획·디자인·개발이 하나의 앱에 귀속되는 목적조직 구조에서 PM 역할 수행. 사람들이 지하철을 이용하는 맥락과 목적을 분석해 서비스 가치를 재정의하는 것이 핵심 과제였다.</p>
+      </div>
+      <div class="overview-block">
+        <h3>핵심 미션</h3>
+        <p>지하철 앱의 수익화 구조 설계. "교통비를 벌 수 있다"는 테마로 CPA 광고 모델 도입, 팀 전체 인건비 ROI를 맞추는 수준의 광고 매출 달성. 단순 기능 개선이 아닌 사용자 행동 맥락에서 비즈니스 기회를 직접 발굴하고 실행한 경험.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 데이터 분석 -->
+  <section class="data-section">
+    <div class="section-title">사용자 맥락에서 발견한 비즈니스 기회</div>
+
+    <div class="data-highlight">
+      <div class="big-num">왜 지하철인가?</div>
+      <div class="big-label">사용자 행동 맥락 분석</div>
+      <p>사람들이 지하철 앱을 이용하는 시간은 <strong>이동 중 유휴 시간</strong>이다. 손에 폰을 들고, 할 일 없이 기다리거나 이동한다. 이 맥락에서 "교통비를 벌 수 있다"는 테마는 단순한 광고가 아니라 <strong>사용자의 시간을 보상으로 전환</strong>하는 구조였다. 누가 시킨 게 아니라 서비스 맥락을 분석하다 직접 발견한 아이디어였다.</p>
+    </div>
+
+    <div class="insight-box">
+      지하철 앱의 핵심 가치는 <strong>"정보 제공"</strong>이 아니라 <strong>"이동 중 시간의 가치화"</strong>였다.<br>
+      에스컬레이터 위치를 찾던 사람들에게 필요한 건 더 정확한 지도가 아니라, 그 시간을 의미있게 만드는 구조였다.
+    </div>
+  </section>
+
+  <!-- 수익화 전략 플로우 -->
+  <section class="flow-section">
+    <div class="section-title">수익화 전략 — 사용자 맥락에서 비즈니스로</div>
+
+    <div class="flow-wrap">
+      <div class="flow-step">이동 중 유휴 시간 발견</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">"교통비 벌기" 테마 설정</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">CPA 광고 모델 도입</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">팀 ROI 달성</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">월 3,000만원 매출</div>
+    </div>
+
+    <div class="insight-box">
+      <strong>핵심 판단:</strong> 지하철 앱은 유틸리티가 아니라 미디어였다.<br>
+      사용자가 매일 반복 접속하는 앱에서 광고 수익화는 자연스러운 흐름이었고, "교통비를 번다"는 프레임이 사용자의 광고 수용도를 높였다.
+    </div>
+  </section>
+
+  <!-- 문제 해결 -->
+  <section class="problem-section">
+    <div class="section-title">문제 해결</div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-num">01</div>
+        <h3>수익 모델 부재 → CPA 광고 도입으로 ROI 달성</h3>
+      </div>
+      <div class="problem-body">
+        <div class="problem-cell">
+          <div class="cell-label situation">상황</div>
+          <p>유닛 독립조직으로 팀 인건비를 앱 매출로 커버해야 했다. 당시 지하철 앱은 수익 모델이 명확하지 않은 상태.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label analysis">분석</div>
+          <p>이동 중 유휴 시간 = 광고 수용도가 높은 맥락. "교통비를 벌 수 있다"는 테마로 CPA 광고를 사용자에게 자연스럽게 제안하는 구조 설계.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label result">결과</div>
+          <p>CPA 광고 도입으로 광고 매출 발생. 기획 1·디자인 1·개발 3인 팀의 ROI를 맞추는 수준의 매출 달성.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-num">02</div>
+        <h3>단순 유틸리티 앱 → 미디어 플랫폼으로 재정의</h3>
+      </div>
+      <div class="problem-body">
+        <div class="problem-cell">
+          <div class="cell-label situation">상황</div>
+          <p>지하철 앱은 노선도·도착 정보 제공에 그치는 유틸리티로만 인식됨. 차별화와 수익화 모두 한계.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label analysis">분석</div>
+          <p>매일 반복 접속하는 앱 = 미디어. 사용자가 지하철 이용 전후 체류하는 시간을 광고 노출이 아닌 가치 교환 구조로 설계.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label result">결과</div>
+          <p>월 300만원에서 시작한 광고 매출이 3년간 월 3,000만원까지 점진적 성장. 수익 구조 안정화.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-num">03</div>
+        <h3>목적조직 운영 — 기획·디자인·개발 한 팀으로</h3>
+      </div>
+      <div class="problem-body">
+        <div class="problem-cell">
+          <div class="cell-label situation">상황</div>
+          <p>기획·디자인·개발이 하나의 앱에 귀속되는 유닛 조직. PM이 전체 방향과 우선순위를 주도해야 했다.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label analysis">분석</div>
+          <p>작은 팀일수록 각 파트가 맥락을 공유해야 빠르게 움직인다. 기획 결정이 개발 일정과 직결되므로 판단 속도가 핵심.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label result">결과</div>
+          <p>유닛 내 커뮤니케이션 구조 정립, 빠른 의사결정 체계 구축. 이후 에이전시·스타트업 환경에서도 동일한 방식 적용.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson Learned -->
+  <section class="lesson-section">
+    <div class="section-title">Lesson Learned</div>
+    <div class="lesson-grid">
+      <div class="lesson-card keep">
+        <h3>✓ 유지해야 할 것</h3>
+        <div class="lesson-item">사용자 맥락에서 비즈니스 기회를 먼저 찾는 접근 — 기능 개선보다 구조 재정의가 임팩트가 크다</div>
+        <div class="lesson-item">수익화를 사용자 경험과 충돌 없이 설계하는 것 — "교통비 벌기" 테마가 그 예시</div>
+        <div class="lesson-item">목적조직에서 PM이 방향을 명확히 잡아야 팀이 빠르게 움직인다</div>
+      </div>
+      <div class="lesson-card fix">
+        <h3>⚠ 보완해야 할 것</h3>
+        <div class="lesson-item">초기 수익 목표를 더 구체적으로 설정했어야 했다 — ROI 달성이 목표가 아닌 과정이 되었어야 했다</div>
+        <div class="lesson-item">광고 모델 외 수익 다각화를 더 일찍 검토했으면 좋았을 것</div>
+        <div class="lesson-item">데이터 트래킹 체계를 초기부터 잡았더라면 더 빠른 의사결정이 가능했을 것</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 웰다/리얼드로우 연결 -->
+  <div class="connect-section">
+    <div class="connect-box">
+      <div class="connect-title">
+        "지하철 앱은 유틸리티가 아니라 미디어였다"
+      </div>
+      <p>
+        이 경험이 가르쳐준 건 하나다. 기능을 잘 만드는 것보다 <strong>사용자가 앱을 쓰는 맥락에서 가치를 재정의하는 것</strong>이 더 큰 임팩트를 만든다.<br><br>
+        누가 시킨 게 아니라 서비스 맥락을 분석하다 직접 수익 모델을 발굴했고, 그게 팀 전체의 ROI로 이어졌다.<br>
+        기획자가 비즈니스 감각을 가져야 한다는 걸 그때 처음 몸으로 배웠다.
+      </p>
+      <div class="tags">
+        <span class="tag">#B2C</span>
+        <span class="tag">#유닛리드</span>
+        <span class="tag">#수익화</span>
+        <span class="tag">#CPA광고</span>
+        <span class="tag">#목적조직</span>
+        <span class="tag">#교통앱</span>
+        <span class="tag">#비즈니스기획</span>
+        <span class="tag">#0to1</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 채용 배너 -->
+  <div class="hire-banner">
+    <div class="hire-banner-inner">
+      <div class="hire-left">
+        <div class="hire-emoji">👋</div>
+        <div class="hire-text">
+          <div class="hire-title">이진경을 뽑아주세요</div>
+          <div class="hire-sub">데이터에서 문제의 원인을 찾고, 서비스 구조로 푸는 PM · 15년차</div>
+        </div>
+      </div>
+      <div class="hire-right">
+        <span class="hire-tag">즉시 출근 가능</span>
+        <span class="hire-tag green">커피 한 잔 사드립니다</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 별점 + 작가의 한마디 + 이전/다음 네비 -->
+  <div class="episode-footer">
+
+    <!-- 별점 -->
+    <div class="rating-section">
+      <div class="rating-left">
+        <div class="rating-stars">
+          <span class="star">★</span><span class="star">★</span>
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="rating-num">9.98</div>
+        <div class="rating-count">면접관 참여 대기중</div>
+      </div>
+      <button class="rating-btn">별점주기</button>
+    </div>
+
+    <!-- 작가의 한마디 -->
+    <div class="author-comment">
+      <div class="author-comment-label">작가의 한마디</div>
+      <div class="author-comment-text">
+        사람들은 로드뷰에서 에스컬레이터 위치를 찾고 있었다. 그 불편함이 앱으로 왔고, 그 시간이 돈이 됐다. 기획자의 눈은 항상 사용자가 지금 뭘 하고 있는가에서 시작한다.
+      </div>
+    </div>
+
+    <!-- 이전화 / 목록 / 다음화 -->
+    <div class="episode-nav">
+      <a href="portfolio_dieter.html" class="ep-nav-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        이전화 (2화)
+      </a>
+      <a href="portfolio_webtoon.html" class="ep-nav-btn center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        목록
+      </a>
+      <a href="portfolio_981park.html" class="ep-nav-btn">
+        다음화 (4화)
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>작가 프로필 — 기획자 L씨</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00d564;
+    --green-light: #e6fff4;
+    --green-mid: #00b855;
+    --black: #1a1a1a;
+    --gray-dark: #444;
+    --gray-mid: #888;
+    --gray-light: #f4f4f4;
+    --white: #ffffff;
+    --border: #e8e8e8;
+    --nav-height: 60px;
+    --font-sans: 'Noto Sans KR', sans-serif;
+    --font-serif: 'Noto Serif KR', serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--white);
+    color: var(--black);
+    padding-bottom: calc(var(--nav-height) + 20px);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── 앱바 ── */
+  .appbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 48px;
+  }
+  .appbar-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.3px;
+  }
+  .appbar-title span {
+    color: var(--green);
+  }
+  .appbar-back {
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--black);
+    text-decoration: none;
+    line-height: 1;
+  }
+  .appbar-share {
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--gray-mid);
+  }
+
+  /* ── 프로필 히어로 ── */
+  .profile-hero {
+    padding: 28px 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  .profile-banner {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 100px;
+    background: linear-gradient(135deg, #00d564 0%, #00a84a 60%, #007a35 100%);
+    overflow: hidden;
+  }
+  .profile-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 12px,
+      rgba(255,255,255,0.06) 12px,
+      rgba(255,255,255,0.06) 24px
+    );
+  }
+
+  /* 웹툰 스타일 말풍선 장식 */
+  .banner-deco {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    z-index: 2;
+  }
+  .banner-deco-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+  }
+  .banner-deco-text {
+    font-family: var(--font-serif);
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+  }
+
+  .profile-avatar-wrap {
+    position: relative;
+    margin-top: 60px;
+    z-index: 2;
+  }
+  .profile-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 4px solid var(--white);
+    background: var(--green-light);
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,213,100,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+  }
+  .profile-avatar-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--white);
+  }
+
+  .profile-name-block {
+    margin-top: 14px;
+  }
+  .profile-name-ko {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.5px;
+  }
+  .profile-name-en {
+    font-size: 12px;
+    color: var(--gray-mid);
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+  }
+  .profile-role-tags {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .role-tag {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--green-light);
+    color: var(--green-mid);
+    border: 1px solid rgba(0,213,100,0.3);
+  }
+
+  .profile-tagline {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--gray-dark);
+    line-height: 1.7;
+    font-family: var(--font-serif);
+    max-width: 320px;
+    word-break: keep-all;
+  }
+  .profile-tagline strong {
+    color: var(--black);
+    font-weight: 700;
+  }
+
+  /* 관심(하트) + 연락 버튼 */
+  .profile-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    margin-bottom: 28px;
+  }
+  .btn-interest {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--black);
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: var(--font-sans);
+    position: relative;
+  }
+  .btn-interest .heart-icon {
+    font-size: 16px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: #ccc;
+  }
+  .btn-interest.liked .heart-icon {
+    color: #e74c3c;
+  }
+  .btn-interest.liked {
+    border-color: rgba(231,76,60,0.3);
+    background: #fff5f5;
+  }
+  .btn-interest:hover .heart-icon {
+    transform: scale(1.3);
+  }
+  .btn-interest .tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: var(--black);
+    color: var(--white);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s;
+    transform-origin: bottom center;
+  }
+  .btn-interest .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--black);
+  }
+  .btn-interest.liked .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+
+  .btn-contact {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: none;
+    background: var(--green);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--font-sans);
+    text-decoration: none;
+  }
+  .btn-contact:hover {
+    background: var(--green-mid);
+  }
+
+  /* ── 구분선 ── */
+  .divider {
+    height: 8px;
+    background: var(--gray-light);
+  }
+
+  /* ── 섹션 공통 ── */
+  .section {
+    padding: 24px 20px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-mid);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── 자기소개 ── */
+  .intro-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--gray-dark);
+    word-break: keep-all;
+    font-family: var(--font-serif);
+  }
+  .intro-text .highlight {
+    background: linear-gradient(to top, rgba(0,213,100,0.25) 40%, transparent 40%);
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  /* ── 커리어 타임라인 ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 24px;
+    position: relative;
+  }
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+  .timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+    flex-shrink: 0;
+  }
+  .timeline-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2.5px solid var(--green);
+    flex-shrink: 0;
+    z-index: 1;
+    transition: transform 0.2s;
+  }
+  .timeline-item:hover .timeline-dot {
+    transform: scale(1.3);
+    background: var(--green);
+  }
+  .timeline-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 4px;
+  }
+  .timeline-item:last-child .timeline-line {
+    display: none;
+  }
+  .timeline-content {
+    flex: 1;
+    padding-top: 0;
+  }
+  .timeline-period {
+    font-size: 11px;
+    color: var(--green-mid);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .timeline-role {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 6px;
+    font-family: var(--font-serif);
+  }
+  .timeline-desc {
+    font-size: 12.5px;
+    color: var(--gray-dark);
+    line-height: 1.7;
+    word-break: keep-all;
+  }
+  .timeline-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .timeline-chip {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--gray-light);
+    color: var(--gray-dark);
+  }
+
+  /* ── 경력 요약 카드 ── */
+  .career-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .career-card {
+    background: var(--gray-light);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+  .career-card.accent {
+    background: var(--green);
+    color: var(--white);
+  }
+  .career-card-num {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+    font-family: var(--font-serif);
+  }
+  .career-card.accent .career-card-num { color: var(--white); }
+  .career-card-label {
+    font-size: 11px;
+    color: var(--gray-mid);
+  }
+  .career-card.accent .career-card-label { color: rgba(255,255,255,0.8); }
+
+  /* ── KPI 보드 ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .kpi-card {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--green);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--green);
+    border-radius: 4px 0 0 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .kpi-card:hover::before {
+    opacity: 1;
+  }
+  .kpi-num {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 4px;
+    font-family: var(--font-serif);
+  }
+  .kpi-desc {
+    font-size: 11px;
+    color: var(--gray-dark);
+    line-height: 1.5;
+    word-break: keep-all;
+  }
+  .kpi-project {
+    font-size: 10px;
+    color: var(--gray-mid);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .kpi-card.wide {
+    grid-column: 1 / -1;
+  }
+
+  /* ── 기술 스택 ── */
+  .skills-group {
+    margin-bottom: 18px;
+  }
+  .skills-group:last-child { margin-bottom: 0; }
+  .skills-group-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-mid);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .skill-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--black);
+    transition: all 0.15s;
+  }
+  .skill-badge:hover {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green-mid);
+  }
+  .skill-badge.primary {
+    background: var(--green-light);
+    border-color: rgba(0,213,100,0.4);
+    color: var(--green-mid);
+  }
+
+  /* ── 도메인 뱃지 ── */
+  .domain-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .domain-badge {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    border: 1px solid var(--border);
+  }
+  .domain-badge.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
+  /* ── 연락처 ── */
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: var(--gray-light);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .contact-item:hover {
+    background: var(--green-light);
+  }
+  .contact-icon {
+    font-size: 18px;
+    width: 28px;
+    text-align: center;
+  }
+  .contact-info {
+    flex: 1;
+  }
+  .contact-label {
+    font-size: 10px;
+    color: var(--gray-mid);
+    font-weight: 500;
+    margin-bottom: 1px;
+  }
+  .contact-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  /* ── 작가의 말 (footer 느낌) ── */
+  .author-note {
+    margin: 0 20px 20px;
+    padding: 16px 18px;
+    background: var(--green-light);
+    border-radius: 12px;
+    border-left: 4px solid var(--green);
+  }
+  .author-note-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green-mid);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .author-note-text {
+    font-size: 13px;
+    color: var(--gray-dark);
+    line-height: 1.8;
+    font-family: var(--font-serif);
+    word-break: keep-all;
+  }
+
+  /* ── 바텀 네비 ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: var(--nav-height);
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    display: flex;
+    z-index: 200;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    text-decoration: none;
+    color: var(--gray-mid);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.15s;
+    position: relative;
+  }
+  .nav-item.active {
+    color: var(--green);
+  }
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 2px;
+    background: var(--green);
+    border-radius: 0 0 3px 3px;
+  }
+  .nav-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  /* 페이드인 애니메이션 */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .profile-hero { animation: fadeUp 0.4s ease both; }
+  .section { animation: fadeUp 0.5s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.2s; }
+  .author-note { animation: fadeUp 0.5s 0.25s ease both; }
+</style>
+</head>
+<body>
+
+<!-- 앱바 -->
+<header class="appbar">
+  <a href="portfolio_webtoon.html" class="appbar-back">←</a>
+  <div class="appbar-title">기획자 <span>L씨</span>의 프로필</div>
+  <div class="appbar-share">⋯</div>
+</header>
+
+<!-- 프로필 히어로 -->
+<section class="profile-hero">
+  <div class="profile-banner">
+    <div class="banner-deco">
+      <div class="banner-deco-dot"></div>
+      <div class="banner-deco-dot"></div>
+      <div class="banner-deco-text">2008 → NOW</div>
+    </div>
+  </div>
+
+  <div class="profile-avatar-wrap">
+    <div class="profile-avatar">🎨</div>
+    <div class="profile-avatar-badge">✦</div>
+  </div>
+
+  <div class="profile-name-block">
+    <div class="profile-name-ko">이진경</div>
+    <div class="profile-name-en">Jinkyung Lee · PM / PO</div>
+  </div>
+
+  <div class="profile-role-tags">
+    <span class="role-tag">PM/PO</span>
+    <span class="role-tag">서비스 기획</span>
+    <span class="role-tag">UX/UI</span>
+    <span class="role-tag">B2B&amp;B2C</span>
+    <span class="role-tag">데이터 분석</span>
+  </div>
+
+  <p class="profile-tagline">
+    <strong>디자인과 개발의 언어를 통역하고,</strong><br>
+    데이터를 기반으로 서비스 목표를 향해<br>
+    <strong>실행하는 기획자</strong>입니다.
+  </p>
+
+  <div class="profile-actions">
+    <button class="btn-interest" id="heartBtn" onclick="toggleHeart()">
+      <span class="heart-icon" id="heartIcon">♡</span>
+      <span id="heartLabel">관심</span>
+      <span class="tooltip" id="heartTooltip">감사합니다 🙇</span>
+    </button>
+    <a href="mailto:jink30@gmail.com" class="btn-contact">
+      ✉ 연락하기
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 자기소개 -->
+<section class="section">
+  <div class="section-title">ABOUT</div>
+  <p class="intro-text">
+    디자인과 서비스 운영으로 커리어를 시작하여, 사용자가 마주하는 화면과
+    그 뒤에서 작동하는 데이터 로직의 유기적 연결을 자연스럽게 체득했습니다.<br><br>
+    에이전시와 인하우스를 오가며 헬스케어·핀테크·OTT·콘텐츠 플랫폼까지
+    <span class="highlight">다양한 도메인</span>에서 End-to-End 기획을 수행했습니다.<br><br>
+    낯선 비즈니스 환경에서도 빠르게 핵심 인사이트를 도출하고,
+    <span class="highlight">데이터 기반으로 문제의 원인을 찾아</span>
+    서비스 기획으로 푸는 것이 저의 방식입니다.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- 경력 요약 + 커리어 타임라인 -->
+<section class="section">
+  <div class="section-title">CAREER</div>
+
+  <div class="career-summary">
+    <div class="career-card accent">
+      <div class="career-card-num">15+</div>
+      <div class="career-card-label">년 경력</div>
+    </div>
+    <div class="career-card">
+      <div class="career-card-num" style="color:var(--green)">10+</div>
+      <div class="career-card-label">개 도메인</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-period">2008 — 2014</div>
+        <div class="timeline-role">Design &amp; UX/UI</div>
+        <div class="timeline-desc">
+          모바일 GUI 기획/디자인으로 출발. 아이웍스·한국데이타하우스에서 만화 콘텐츠 서비스 운영과 WAP 무선만화를 기획·운영하며 서비스의 뼈대를 읽는 시야를 넓혔습니다.
+        </div>
+        <div class="timeline-chips">
+          <span class="timeline-chip">웹툰/만화</span>
+          <span class="timeline-chip">콘텐츠 기획</span>
+          <span class="timeline-chip">UX/UI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-period">2015 — 2019</div>
+        <div class="timeline-role">Project Manager</div>
+        <div class="timeline-desc">
+          시드포스트크리에이티브 → 말랑스튜디오 → 스탬프에서 SI 프로젝트 PM 및 기획 리딩. 4명 조직을 15명으로 확대·성장시키고 연 매출 250% 성장을 주도. 티빙·롯데캐피탈·미래에셋생명 등 대형 프로젝트를 담당했습니다.
+        </div>
+        <div class="timeline-chips">
+          <span class="timeline-chip">PM/PL</span>
+          <span class="timeline-chip">팀 빌딩</span>
+          <span class="timeline-chip">SI 프로젝트</span>
+          <span class="timeline-chip">OTT/핀테크</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot" style="background:var(--green); border-color:var(--green)"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-period">2020 — 현재</div>
+        <div class="timeline-role">Product Owner</div>
+        <div class="timeline-desc">
+          모노리스(9.81파크) → 직방(우리집 PO) → GSITM → 쿠론(군 장병 마음건강) → 지씨케어(AIA 디지털헬스케어)까지. 비즈니스 목표와 제품 성장을 함께 책임지는 PO로 확장하며 데이터·PG·디지털 헬스케어 도메인까지 넓혔습니다.
+        </div>
+        <div class="timeline-chips">
+          <span class="timeline-chip">PO</span>
+          <span class="timeline-chip">헬스케어</span>
+          <span class="timeline-chip">핀테크/부동산</span>
+          <span class="timeline-chip">AI 서비스</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 최근 프리랜서/공백 -->
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot" style="border-style:dashed"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-period">2025.11 — 현재</div>
+        <div class="timeline-role" style="color:var(--gray-mid)">다음 장을 쓰는 중 ✍</div>
+        <div class="timeline-desc">
+          새로운 챕터를 준비하고 있습니다.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Key Performance -->
+<section class="section">
+  <div class="section-title">KEY PERFORMANCE</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num">월 2억</div>
+      <div class="kpi-desc">GMV 달성, 신규 유입 +35%</div>
+      <div class="kpi-project">직방 우리집 월세납부</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">+0.23%</div>
+      <div class="kpi-desc">Funnel 전환율 향상<br>(9단계 → 7단계 축소)</div>
+      <div class="kpi-project">직방 Tableau 분석</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">1.5만명</div>
+      <div class="kpi-desc">목표 KPI 3개월 조기 달성,<br>활성 사용자 32% 효능 개선</div>
+      <div class="kpi-project">군 장병 마음건강</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">+2.6배</div>
+      <div class="kpi-desc">카트 탑승 영상 공유율 상승,<br>AR 이벤트 참여율 70%</div>
+      <div class="kpi-project">9.81파크 앱 2.0</div>
+    </div>
+    <div class="kpi-card wide">
+      <div class="kpi-num">×10</div>
+      <div class="kpi-desc">월 매출 300만원 → 3,000만원 성장 · 연 60편 신작 런칭 파이프라인 구축</div>
+      <div class="kpi-project">한국데이타하우스 WAP 무선만화</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 기술 스택 -->
+<section class="section">
+  <div class="section-title">SKILLS</div>
+
+  <div class="skills-group">
+    <div class="skills-group-title">🎨 UX/UI</div>
+    <div class="skills-list">
+      <span class="skill-badge primary">Figma</span>
+      <span class="skill-badge">Axure RP</span>
+      <span class="skill-badge">Adobe XD</span>
+      <span class="skill-badge">Powerpoint</span>
+    </div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skills-group-title">🤝 협업</div>
+    <div class="skills-list">
+      <span class="skill-badge primary">JIRA</span>
+      <span class="skill-badge primary">Confluence</span>
+      <span class="skill-badge">Notion</span>
+      <span class="skill-badge">Slack</span>
+      <span class="skill-badge">MS Office</span>
+    </div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skills-group-title">📊 분석</div>
+    <div class="skills-list">
+      <span class="skill-badge primary">Google Analytics</span>
+      <span class="skill-badge primary">Tableau</span>
+      <span class="skill-badge">Excel</span>
+    </div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skills-group-title">🤖 AI Tools</div>
+    <div class="skills-list">
+      <span class="skill-badge primary">Claude</span>
+      <span class="skill-badge primary">Gemini</span>
+      <span class="skill-badge">GPT-4</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 도메인 경험 -->
+<section class="section">
+  <div class="section-title">DOMAIN</div>
+  <div class="domain-grid">
+    <span class="domain-badge active">웹툰/콘텐츠</span>
+    <span class="domain-badge active">디지털 헬스케어</span>
+    <span class="domain-badge active">핀테크/부동산</span>
+    <span class="domain-badge active">OTT</span>
+    <span class="domain-badge">SI 프로젝트</span>
+    <span class="domain-badge">레저/스포츠</span>
+    <span class="domain-badge">글로벌 서비스</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 연락처 -->
+<section class="section">
+  <div class="section-title">CONTACT</div>
+  <div class="contact-list">
+    <a href="mailto:jink30@gmail.com" class="contact-item">
+      <div class="contact-icon">✉</div>
+      <div class="contact-info">
+        <div class="contact-label">EMAIL</div>
+        <div class="contact-value">jink30@gmail.com</div>
+      </div>
+      <div>›</div>
+    </a>
+    <a href="tel:01084184141" class="contact-item">
+      <div class="contact-icon">📱</div>
+      <div class="contact-info">
+        <div class="contact-label">PHONE</div>
+        <div class="contact-value">010-8418-4141</div>
+      </div>
+      <div>›</div>
+    </a>
+  </div>
+</section>
+
+<!-- 작가의 말 -->
+<div class="author-note">
+  <div class="author-note-title">✦ 작가의 말</div>
+  <div class="author-note-text">
+    만화가가 되려고 입학했던 세종대 만화 애니메이션 학부,
+    그 꿈이 방향을 틀어 지금 여기까지 왔습니다.<br>
+    돌고 돌아 웹툰 플랫폼 앞에 다시 서게 된 이 기획자의 이야기,
+    아직 연재 중입니다. 🖊
+  </div>
+</div>
+
+<!-- 바텀 네비 -->
+<nav class="bottom-nav">
+  <a href="portfolio_webtoon.html" class="nav-item">
+    <span class="nav-icon">📖</span>
+    <span>WEBTOON</span>
+  </a>
+  <a href="portfolio_profile.html" class="nav-item active">
+    <span class="nav-icon">👤</span>
+    <span>PROFILE</span>
+  </a>
+</nav>
+
+<script>
+  function toggleHeart() {
+    const btn = document.getElementById('heartBtn');
+    const icon = document.getElementById('heartIcon');
+    const label = document.getElementById('heartLabel');
+
+    btn.classList.toggle('liked');
+    if (btn.classList.contains('liked')) {
+      icon.textContent = '♥';
+      label.textContent = '관심';
+      // 팝핑 애니메이션
+      icon.style.transform = 'scale(1.5)';
+      setTimeout(() => { icon.style.transform = ''; }, 300);
+      // 툴팁 자동 숨기기
+      setTimeout(() => {
+        btn.classList.remove('liked');
+        icon.textContent = '♡';
+      }, 2500);
+    } else {
+      icon.textContent = '♡';
+    }
+  }
+</script>
+
+</body>
+</html>

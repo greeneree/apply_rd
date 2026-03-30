@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이진경 포트폴리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --primary: #00d564;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666;
+    --text-muted: #999;
+    --border: #e8e8e8;
+    --bg: #ffffff;
+    --bg-sub: #f9f9f9;
+    --star: #f5c518;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ── 헤더 ── */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--text-primary); }
+  .header-icons { display: flex; gap: 16px; }
+  .header-icons svg { width: 22px; height: 22px; color: var(--text-primary); cursor: pointer; }
+
+  /* ── 작품 커버 영역 ── */
+  .cover-section {
+    display: flex;
+    gap: 16px;
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cover-img {
+    width: 120px;
+    height: 160px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .cover-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .cover-placeholder {
+    position: absolute;
+    bottom: 8px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
+    line-height: 1.4;
+    padding: 0 6px;
+  }
+
+  .cover-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .cover-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+  .cover-sub {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+  .cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+  }
+  .meta-badge {
+    font-size: 0.68rem;
+    background: var(--bg-sub);
+    color: var(--text-secondary);
+    padding: 2px 7px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+  .meta-badge.green {
+    background: #e8faf2;
+    color: #00a84c;
+    border-color: #b3e8ce;
+  }
+  .cover-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cover-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+  }
+  .stars { color: var(--star); font-size: 0.75rem; }
+  .rating-num { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); }
+
+  /* ── 태그 ── */
+  .tags-section {
+    padding: 12px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tag {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    background: var(--bg-sub);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tag:hover { background: #e8faf2; color: #00a84c; border-color: #b3e8ce; }
+
+  /* ── 버튼 영역 ── */
+  .btn-section {
+    padding: 14px 16px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 8px solid var(--bg-sub);
+  }
+  .btn-interest {
+    flex: 1;
+    height: 42px;
+    border: 1.5px solid var(--primary);
+    background: #fff;
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    position: relative;
+  }
+  .btn-interest:hover { background: #e8faf2; }
+  .btn-interest.liked { background: #fff5f5; border-color: #f9a8a8; color: #e74c3c; }
+  .btn-interest .heart-icon { font-size: 16px; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .btn-interest.liked .heart-icon { transform: scale(1.3); }
+  .btn-interest .like-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: var(--text-primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    transform-origin: bottom center;
+  }
+  .btn-interest .like-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--text-primary);
+  }
+  .btn-interest.liked .like-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  .btn-first {
+    flex: 2;
+    height: 42px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.15s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .btn-first:hover { background: #00b857; }
+  .btn-share {
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .btn-share:hover { background: var(--bg-sub); }
+  .btn-share svg { width: 18px; height: 18px; color: var(--text-secondary); }
+
+  /* ── 회차 헤더 ── */
+  .episode-header {
+    padding: 14px 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .episode-count {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .episode-count span { color: var(--primary); }
+  .sort-btns { display: flex; gap: 2px; }
+  .sort-btn {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.15s;
+  }
+  .sort-btn.active {
+    background: var(--text-primary);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* ── 회차 목록 ── */
+  .episode-list { padding: 0 0 80px; }
+  .episode-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.1s;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .episode-item:hover { background: #f9f9f9; }
+  .ep-thumb {
+    width: 80px;
+    height: 60px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .ep-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ep-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    line-height: 1.3;
+    padding: 4px;
+  }
+  .ep-info { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .ep-num { font-size: 0.72rem; color: var(--text-muted); }
+  .ep-title { font-size: 0.88rem; font-weight: 500; color: var(--text-primary); line-height: 1.4; word-break: keep-all; }
+  .ep-meta { display: flex; align-items: center; gap: 6px; }
+  .ep-stars { color: var(--star); font-size: 0.7rem; }
+  .ep-rating { font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); }
+  .ep-date { font-size: 0.7rem; color: var(--text-muted); }
+  .ep-new {
+    font-size: 0.62rem;
+    background: #ff4d4d;
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+  /* ── 바텀 네비 ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: 56px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: stretch;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    transition: background 0.15s;
+  }
+  .nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 0 0 3px 3px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .nav-item.active::before { opacity: 1; }
+  .nav-item svg { width: 22px; height: 22px; color: var(--text-muted); }
+  .nav-item.active svg { color: var(--primary); }
+  .nav-item span { font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.5px; }
+  .nav-item.active span { color: var(--primary); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="logo"><img src="images/logo.png" alt="JINK" style="height:28px;width:auto;"></div>
+  <div class="header-icons">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+  </div>
+</header>
+
+<!-- 작품 커버 -->
+<section class="cover-section">
+  <div class="cover-img">
+    <img src="images/cover.png" alt="포트폴리오 표지">
+  </div>
+  <div class="cover-info">
+    <div class="cover-title">만화하려고 돈 벌었는데<br>15년차 IT기획자가 되어버렸다</div>
+    <div class="cover-sub">이진경 · PM/PO</div>
+    <div class="cover-meta">
+      <span class="meta-badge green">구직중</span>
+      <span class="meta-badge">만화서비스</span>
+      <span class="meta-badge">핀테크</span>
+      <span class="meta-badge">OTT</span>
+      <span class="meta-badge">헬스케어</span>
+    </div>
+    <div class="cover-desc">
+      데이터에서 문제의 원인을 찾고, 서비스 구조로 푸는 PM. 만화책 3,000권 이상 보유. 
+    </div>
+    <div class="cover-rating">
+      <span class="stars">★★★★★</span>
+      <span class="rating-num">9.98</span>
+    </div>
+  </div>
+</section>
+
+<!-- 태그 -->
+<div class="tags-section">
+  <span class="tag">#헬스케어</span>
+  <span class="tag">#핀테크</span>
+  <span class="tag">#OTT</span>
+  <span class="tag">#웹툰플랫폼</span>
+  <span class="tag">#O2O</span>
+  <span class="tag">#Gamification</span>
+  <span class="tag">#데이터분석</span>
+  <span class="tag">#0to1</span>
+  <span class="tag">#Agile</span>
+  <span class="tag">#B2C</span>
+  <span class="tag">#B2B</span>
+</div>
+
+<!-- 버튼 -->
+<div class="btn-section">
+  <button class="btn-interest" id="mainHeartBtn">
+    <span class="heart-icon" id="mainHeartIcon">♡</span>
+    관심
+    <span class="like-tooltip">감사합니다 🙇</span>
+  </button>
+  <a href="portfolio_prologue.html" class="btn-first" style="text-decoration:none;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    프롤로그 보기
+  </a>
+  <button class="btn-share">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  </button>
+</div>
+
+<!-- 회차 헤더 -->
+<div class="episode-header">
+  <div class="episode-count">총 <span>8</span>화</div>
+  <div class="sort-btns">
+    <button class="sort-btn active">최신화부터</button>
+    <button class="sort-btn">1화부터</button>
+  </div>
+</div>
+
+<!-- 회차 목록 -->
+<div class="episode-list">
+
+  <!-- 에필로그 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#667eea,#764ba2);">에필로그</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">에필로그</div>
+      <div class="ep-title">그래서, 리얼드로우에 지원합니다.</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.97</span>
+        <span class="ep-date">25.03.24</span>
+        <span class="ep-new">NEW</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6화 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#f093fb,#f5576c);">직방<br>우리집</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">6화</div>
+      <div class="ep-title">직방 우리집 — 월세납부와 홈픽스</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.95</span>
+        <span class="ep-date">25.03.17</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5화 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">군장병<br>마음건강</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">5화</div>
+      <div class="ep-title">군장병을 위한 마음건강 서비스</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.96</span>
+        <span class="ep-date">25.03.10</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4화 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#f7971e,#ffd200);">9.81<br>파크</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">4화</div>
+      <div class="ep-title">9.81 파크 — 중력이 만든 게임</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.93</span>
+        <span class="ep-date">25.03.03</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3화 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);">한국<br>데이터</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">1화</div>
+      <div class="ep-title">한국데이터하우스 — 피처폰 만화에서 웹툰 플랫폼까지</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.91</span>
+        <span class="ep-date">25.02.24</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2화 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">지하철<br>앱</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">3화</div>
+      <div class="ep-title">지하철 앱 — 로드뷰에서 에스컬레이터 위치를 찾던 사람들</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.90</span>
+        <span class="ep-date">25.02.17</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1화 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#ff9a9e,#fecfef);">다이어터</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">2화</div>
+      <div class="ep-title">다이어터 — 캐릭터는 사라졌지만, 사용자는 남아있었다</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.88</span>
+        <span class="ep-date">25.02.10</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 프롤로그 -->
+  <div class="episode-item" style="cursor:pointer;">
+    <div class="ep-thumb">
+      <div class="ep-thumb-placeholder" style="background:linear-gradient(135deg,#1a1a2e,#533483);">프롤로그</div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-num">프롤로그</div>
+      <div class="ep-title">만화하려고 돈 벌었는데 15년차 IT기획자가 되어버렸다</div>
+      <div class="ep-meta">
+        <span class="ep-stars">★</span>
+        <span class="ep-rating">9.99</span>
+        <span class="ep-date">25.02.03</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 바텀 네비 -->
+<nav class="bottom-nav">
+  <a href="portfolio_webtoon.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M4 4h6v6H4zm0 10h6v6H4zm10-10h6v6h-6zm0 10h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2z"/></svg>
+    <span>WEBTOON</span>
+  </a>
+  <a href="portfolio_profile.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>PROFILE</span>
+  </a>
+</nav>
+
+<script>
+  // 회차 클릭 네비게이션
+  const epLinks = {
+    '에필로그': 'portfolio_epilogue.html',
+    '6화': 'portfolio_zigbang.html',
+    '5화': 'portfolio_military.html',
+    '4화': 'portfolio_981park.html',
+    '1화': 'portfolio_kdh.html',
+    '3화': 'portfolio_subway.html',
+    '2화': 'portfolio_dieter.html',
+    '프롤로그': 'portfolio_prologue.html',
+  };
+  document.querySelectorAll('.episode-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const epNum = item.querySelector('.ep-num');
+      if (epNum && epLinks[epNum.textContent.trim()]) {
+        window.location.href = epLinks[epNum.textContent.trim()];
+      }
+    });
+  });
+
+  // 프롤로그 버튼
+  const btnFirst = document.querySelector('.btn-first');
+  if (btnFirst) btnFirst.addEventListener('click', () => { window.location.href = 'portfolio_prologue.html'; });
+
+  // 정렬 버튼
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // 관심 버튼 토글 — 하트 영구 유지 + 툴팁 2s 후 자동 숨김
+  const btnInterest = document.getElementById('mainHeartBtn');
+  const heartIcon = document.getElementById('mainHeartIcon');
+  const tooltip = btnInterest.querySelector('.like-tooltip');
+  let isLiked = false;
+  let tooltipTimer = null;
+
+  btnInterest.addEventListener('click', () => {
+    isLiked = !isLiked;
+
+    if (isLiked) {
+      heartIcon.textContent = '♥';
+      btnInterest.classList.add('liked');
+      // 툴팁 잠깐 보여주고 숨기기 (하트는 유지)
+      clearTimeout(tooltipTimer);
+      tooltipTimer = setTimeout(() => {
+        tooltip.style.opacity = '0';
+        tooltip.style.transform = 'translateX(-50%) scale(0.8)';
+      }, 2000);
+    } else {
+      heartIcon.textContent = '♡';
+      btnInterest.classList.remove('liked');
+      tooltip.style.opacity = '';
+      tooltip.style.transform = '';
+      clearTimeout(tooltipTimer);
+    }
+  });
+</script>
+</body>
+</html>

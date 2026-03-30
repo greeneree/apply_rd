@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1화 — 한국데이터하우스 무선만화·웹툰 | JINK Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #00d564;
+    --primary-light: #e8faf2;
+    --primary-dark: #00a84c;
+    --accent: #ff6b6b;
+    --warning: #f59e0b;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555;
+    --text-muted: #999;
+    --border: #e8e8e8;
+    --bg: #ffffff;
+    --bg-sub: #f8f8f8;
+    --bg-dark: #1a1a1a;
+    --star: #f5c518;
+    --width: 960px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.7; }
+  .header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 1.1rem; font-weight: 900; color: var(--primary); }
+  .breadcrumb { font-size: 0.8rem; color: var(--text-muted); }
+  .breadcrumb span { color: var(--text-primary); font-weight: 500; }
+  .back-btn { font-size: 0.8rem; color: var(--text-secondary); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.15s; }
+  .back-btn:hover { color: var(--primary); }
+  .container { max-width: var(--width); margin: 0 auto; padding: 0 40px 80px; }
+  .hero { padding: 48px 0 40px; border-bottom: 1px solid var(--border); }
+  .episode-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-dark); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.05em; margin-bottom: 16px; }
+  .episode-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+  .hero-title { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; line-height: 1.35; color: var(--text-primary); margin-bottom: 12px; word-break: keep-all; }
+  .hero-sub { font-size: 1rem; color: var(--text-muted); margin-bottom: 28px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .meta-value { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+  .kpi-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .section-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; color: var(--primary-dark); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media(max-width:700px){ .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+  .kpi-card { background: var(--bg-sub); border: 1px solid var(--border); border-radius: 10px; padding: 20px; position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--primary); }
+  .kpi-num { font-size: 1.8rem; font-weight: 900; color: var(--text-primary); line-height: 1.1; margin-bottom: 4px; }
+  .kpi-num span { font-size: 1rem; color: var(--primary); }
+  .kpi-desc { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; }
+  .kpi-context { font-size: 0.7rem; color: var(--warning); font-style: italic; }
+  .overview-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media(max-width:640px){ .overview-grid { grid-template-columns: 1fr; } }
+  .overview-block h3 { font-size: 0.88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .overview-block p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; word-break: keep-all; }
+  .insight-box { background: var(--primary-light); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 20px 24px; margin: 24px 0; font-size: 0.92rem; color: var(--text-primary); line-height: 1.8; word-break: keep-all; }
+  .insight-box strong { color: var(--primary-dark); }
+  .problem-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .problem-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+  .problem-header { background: var(--bg-dark); color: #fff; padding: 14px 20px; display: flex; align-items: center; gap: 10px; }
+  .problem-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .problem-header h3 { font-size: 0.95rem; font-weight: 700; }
+  .problem-body { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+  @media(max-width:640px){ .problem-body { grid-template-columns: 1fr; } }
+  .problem-cell { padding: 18px 20px; border-right: 1px solid var(--border); }
+  .problem-cell:last-child { border-right: none; }
+  .cell-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .cell-label.situation { color: #ef4444; }
+  .cell-label.analysis { color: var(--warning); }
+  .cell-label.result { color: var(--primary-dark); }
+  .problem-cell p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7; word-break: keep-all; }
+  .flow-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .flow-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 20px 0; }
+  .flow-step { background: var(--primary-light); border: 1px solid #b3e8ce; border-radius: 8px; padding: 10px 16px; font-size: 0.82rem; color: var(--primary-dark); font-weight: 500; word-break: keep-all; }
+  .flow-arrow { color: var(--primary); font-size: 1.1rem; font-weight: 700; }
+  .lesson-section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .lesson-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width:640px){ .lesson-grid { grid-template-columns: 1fr; } }
+  .lesson-card { border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .lesson-card.keep { border-top: 3px solid var(--primary); }
+  .lesson-card.fix { border-top: 3px solid var(--warning); }
+  .lesson-card h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 12px; }
+  .lesson-card.keep h3 { color: var(--primary-dark); }
+  .lesson-card.fix h3 { color: var(--warning); }
+  .lesson-item { display: flex; gap: 8px; margin-bottom: 10px; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; word-break: keep-all; }
+  .lesson-item::before { content: '·'; color: var(--text-muted); flex-shrink: 0; margin-top: 1px; }
+  .connect-section { background: var(--bg-sub); margin: 40px -40px 0; padding: 40px; }
+  .connect-box { max-width: 700px; margin: 0 auto; text-align: center; }
+  .connect-box .connect-title { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; line-height: 1.5; word-break: keep-all; }
+  .connect-box p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.9; word-break: keep-all; }
+  .connect-box strong { color: var(--primary-dark); }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; justify-content: center; }
+  .tag { font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-secondary); background: var(--bg); }
+  .hire-banner { background: var(--bg-dark); margin: 0 -40px; padding: 0 40px; }
+  .hire-banner-inner { max-width: var(--width); margin: 0 auto; padding: 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .hire-left { display: flex; align-items: center; gap: 14px; }
+  .hire-emoji { font-size: 1.8rem; }
+  .hire-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .hire-sub { font-size: 0.78rem; color: #aaa; }
+  .hire-right { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+  .hire-tag { font-size: 0.72rem; padding: 5px 12px; border-radius: 20px; border: 1px solid #444; color: #ccc; white-space: nowrap; }
+  .hire-tag.green { border-color: var(--primary); color: var(--primary); background: rgba(0,213,100,0.08); }
+  .episode-footer { margin-top: 48px; border-top: 1px solid var(--border); }
+  .rating-section { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .rating-left { display: flex; align-items: center; gap: 10px; }
+  .rating-stars { display: flex; gap: 2px; }
+  .star { font-size: 1.3rem; color: var(--star); }
+  .rating-num { font-size: 1.1rem; font-weight: 900; color: var(--text-primary); }
+  .rating-count { font-size: 0.78rem; color: var(--text-muted); }
+  .rating-btn { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 0.82rem; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; transition: background 0.15s; }
+  .rating-btn:hover { background: #e05555; }
+  .author-comment { padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .author-comment-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 8px; }
+  .author-comment-text { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; word-break: keep-all; padding-left: 12px; border-left: 3px solid var(--primary); }
+  .episode-nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 40px; }
+  .ep-nav-btn { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.15s; }
+  .ep-nav-btn:hover { background: var(--bg-sub); color: var(--primary); }
+  .ep-nav-btn.center { color: var(--text-secondary); font-size: 0.85rem; }
+  .ep-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="logo">JINK</div>
+    <div class="breadcrumb">포트폴리오 / <span>1화 · 한국데이터하우스</span></div>
+  </div>
+  <a href="portfolio_webtoon.html" class="back-btn">← 목록으로</a>
+</header>
+
+<div class="container">
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="episode-badge"><span class="dot"></span>1화</div>
+    <h1 class="hero-title">한국데이터하우스<br>— 만화를 팔기 위해 만화 플랫폼을 만들었다</h1>
+    <p class="hero-sub">WAP 무선만화 → 웹툰 플랫폼 구축·운영 End-to-End</p>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-label">역할</span><span class="meta-value">운영 · 기획 (End to End)</span></div>
+      <div class="meta-item"><span class="meta-label">기간</span><span class="meta-value">2010.07 — 2013.03</span></div>
+      <div class="meta-item"><span class="meta-label">플랫폼</span><span class="meta-value">WAP · iOS · Android · Web(Admin)</span></div>
+      <div class="meta-item"><span class="meta-label">도메인</span><span class="meta-value">만화 · 웹툰 · 콘텐츠 커머스</span></div>
+      <div class="meta-item"><span class="meta-label">도구</span><span class="meta-value">PPT · Photoshop · Excel</span></div>
+    </div>
+  </section>
+
+  <!-- KPI -->
+  <section class="kpi-section">
+    <div class="section-title">핵심 지표</div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">10<span>배</span></div>
+        <div class="kpi-desc">월 매출 성장 (2010→2013)</div>
+        <div class="kpi-context">300만원 → 평균 2,500만원 (피크 3,000만원)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">3<span>채널</span></div>
+        <div class="kpi-desc">WAP · 자사 앱 · 티스토어 웹툰</div>
+        <div class="kpi-context">OSMU로 단일 자산의 채널 확장</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">60<span>편/년</span></div>
+        <div class="kpi-desc">연평균 신작 런칭</div>
+        <div class="kpi-context">신규 작가 4명 직접 영입 계약</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">25<span>만원</span></div>
+        <div class="kpi-desc">편당 제작비 기준</div>
+        <div class="kpi-context">회당 매출 80~150만원 수익구조 검증</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 개요 -->
+  <section class="overview-section">
+    <div class="section-title">프로젝트 개요</div>
+    <div class="overview-grid">
+      <div class="overview-block">
+        <h3>배경</h3>
+        <p>WAP(무선인터넷) 기반 만화 플랫폼에서 작가 소싱, 작품 가공, 매출 운영까지 End-to-End로 담당. 스마트폰 보급이 빨라지던 시기에 WAP 콘텐츠를 앱·웹툰 환경으로 전환(OSMU)해 신규 채널과 수익원을 만드는 일을 주도했다.</p>
+      </div>
+      <div class="overview-block">
+        <h3>핵심 미션</h3>
+        <p>인기 장르(남성향)가 아닌 결제 주체(10~20대 여성)를 기준으로 콘텐츠와 포맷을 재설계. 클리프행어 구조와 매력적인 그림체로 다음 화 전환율을 만들고, 기존 IP를 혈액형별로 재구성해 권단위 패키징 상품으로 매출 기여. 이미지 용량 최적화로 티스토어 웹툰 운영 병목을 제거.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서비스 플로우 -->
+  <section class="flow-section">
+    <div class="section-title">서비스 플로우</div>
+    <div class="flow-wrap">
+      <div class="flow-step">유입 설계<br><small>경품 이벤트</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">타깃 재정의<br><small>10~20대 여성</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">콘텐츠 전략<br><small>그림체 + 클리프행어</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">런칭 운영<br><small>2개월 단위 신작</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">운영 고도화<br><small>OSMU + 어드민 개선</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">병목 개선<br><small>이미지 최적화</small></div>
+    </div>
+    <div class="insight-box">
+      <strong>콘텐츠 성장의 핵심은 "인기"가 아니라 전환(다음 화로 달리게 만드는 구조)과 품질(그림체)이다.</strong><br>
+      플랫폼 성과는 콘텐츠만이 아니라 운영·어드민·업로드 프로세스 품질이 결정한다. 병목 제거가 곧 이탈 방지이자 효율 개선이다.
+    </div>
+  </section>
+
+  <!-- 문제 해결 -->
+  <section class="problem-section">
+    <div class="section-title">문제 해결</div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-num">01</div>
+        <h3>WAP 콘텐츠 → 앱 웹툰형 경험 전환(OSMU) + 무료앱 런칭</h3>
+      </div>
+      <div class="problem-body">
+        <div class="problem-cell">
+          <div class="cell-label situation">상황</div>
+          <p>WAP 환경은 제약이 커서 콘텐츠 소비 경험이 제한적이고, 스마트폰 보급률이 빨라짐에 따라 WAP만으로는 신규 유입과 체류시간 확장에 한계 발생.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label analysis">분석</div>
+          <p>"짧은 호흡, 직관적 플롯, 빠른 만족"에 반응하는 사용자 대상으로 포맷·뷰어 경험 개선이 체류→재방문→전환으로 연결될 가능성 확인.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label result">결과</div>
+          <p>WAP 콘텐츠를 웹툰처럼 보이도록 편집해 소비 경험 개선. 이후 티스토어 웹툰 운영권 기반으로 유통 확장 및 운영 경험 축적.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-num">02</div>
+        <h3>운영 병목(용량/업로드) 개선으로 티스토어 웹툰 운영 안정화</h3>
+      </div>
+      <div class="problem-body">
+        <div class="problem-cell">
+          <div class="cell-label situation">상황</div>
+          <p>웹툰 이미지 용량·업로드 제약으로 운영 효율 및 열람 경험 저하. 반복되는 업로드 실패가 배너·편성 운영 전체를 지연시킴.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label analysis">분석</div>
+          <p>운영 문제는 곧 노출/열람/트래픽 감소로 연결된다는 판단 하에 이미지 용량 최적화 테스트 직접 수행.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label result">결과</div>
+          <p>이미지 분할 최적 개수로 업로드 방식을 제안·적용. 티스토어 웹툰 편성·어드민·배너 운영을 안정적으로 수행.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-num">03</div>
+        <h3>콘텐츠 전략 수립 — 타깃 재정의 + 작가 영입</h3>
+      </div>
+      <div class="problem-body">
+        <div class="problem-cell">
+          <div class="cell-label situation">상황</div>
+          <p>인기 장르(남성향)로는 기존 보유 콘텐츠만으로 매출 확장이 어려움. 결제 전환이 빠른 세그먼트로의 타깃 재정의 필요.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label analysis">분석</div>
+          <p>실제 결제 주체인 10~20대 여성 중심으로 진입장벽이 낮은 장르(아이돌, 학원로맨스, 사내연애) 및 로판 스타일 그림체를 기준으로 작가 영입 전략 수립.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label result">결과</div>
+          <p>신인 작가 4명 발굴·계약, 작가별 2개월 단위 신작 1편씩 정기 런칭 체계화. 기존 IP("혈액형에 관한 간단한 고찰" 등)는 권단위로 재구성해 정액제 가입자 증가 기여.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-num">04</div>
+        <h3>모바일 전용 오리지널 기획·제작으로 전환 중심 라인업 구축</h3>
+      </div>
+      <div class="problem-body">
+        <div class="problem-cell">
+          <div class="cell-label situation">상황</div>
+          <p>기존 유통·재가공 작품만으로는 포맷 제약과 경쟁 심화로 차별화·매출 확장에 한계. 모바일 환경에 최적화된 전용 콘텐츠 필요.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label analysis">분석</div>
+          <p>WAP/모바일 사용자는 짧은 호흡의 빠른 몰입에 반응. 그림체 경쟁력 + 클리프행어로 다음 화 전환을 만들고, 제작비 대비 손익이 명확해 운영·편성 최적화 가능.</p>
+        </div>
+        <div class="problem-cell">
+          <div class="cell-label result">결과</div>
+          <p>모바일 전용 오리지널 기획·제작(작가 영입/시놉·연출 가이드)으로 전환 중심 라인업 구축. 제작비 기반 손익 관리로 수익성을 높이며 매출 성장 및 웹툰 활용에 기여.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson Learned -->
+  <section class="lesson-section">
+    <div class="section-title">Lesson Learned</div>
+    <div class="lesson-grid">
+      <div class="lesson-card keep">
+        <h3>✓ 유지해야 할 것</h3>
+        <div class="lesson-item">타깃 재정의로 전환율을 만든 의사결정 — '인기 장르'가 아닌 '결제 주체' 기준으로 콘텐츠·포맷을 재설계</div>
+        <div class="lesson-item">OSMU로 채널 확장 & 재사용 가치 극대화 — WAP 자산을 앱·스토어로 확장해 추가 매출원 확보</div>
+        <div class="lesson-item">편성·배너 운영 기준 수립 — 장르/신작/전환 반응 기반 및 어드민 개선으로 운영 효율화</div>
+      </div>
+      <div class="lesson-card fix">
+        <h3>⚠ 보완해야 할 것</h3>
+        <div class="lesson-item">퍼널 지표 체계화 미흡 — 데이터 분석이 상세하게 가능하던 시기가 아니기에 면밀한 사용자 분석이 어려웠음</div>
+        <div class="lesson-item">실험 문화(A/B) 운영 고도화 필요 — 이벤트/배너/추천 영역을 가설 기반으로 실험·검증하는 프로세스를 더 촘촘히 만들 필요</div>
+        <div class="lesson-item">운영 자동화/툴링 확장 — 업로드/편성/검수 반복 업무를 어드민/툴로 더 줄여 운영 효율을 선제적으로 확보</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 연결 멘트 -->
+  <div class="connect-section">
+    <div class="connect-box">
+      <div class="connect-title">"만화를 하려고 IT를 시작했는데, IT로 만화를 만들게 됐다"</div>
+      <p>
+        WAP 시절에 배운 건 플랫폼이 바뀌어도 구조는 같다는 것이다.<br>
+        결제 주체를 파악하고, 그들이 원하는 콘텐츠 포맷을 만들고, 다음 화로 달리게 하는 구조를 설계하는 일.<br><br>
+        <strong>10년이 지난 지금 리얼드로우가 AI로 그 구조를 다시 만들고 있다면, 나는 그 안에 있고 싶다.</strong>
+      </p>
+      <div class="tags">
+        <span class="tag">#만화플랫폼</span>
+        <span class="tag">#WAP</span>
+        <span class="tag">#웹툰</span>
+        <span class="tag">#OSMU</span>
+        <span class="tag">#콘텐츠기획</span>
+        <span class="tag">#작가영입</span>
+        <span class="tag">#클리프행어</span>
+        <span class="tag">#운영기획</span>
+        <span class="tag">#매출10배</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 채용 배너 -->
+  <div class="hire-banner">
+    <div class="hire-banner-inner">
+      <div class="hire-left">
+        <div class="hire-emoji">✏️</div>
+        <div class="hire-text">
+          <div class="hire-title">이진경을 뽑아주세요</div>
+          <div class="hire-sub">만화 덕후 + 웹툰 플랫폼 구축 경험 + 15년차 PM</div>
+        </div>
+      </div>
+      <div class="hire-right">
+        <span class="hire-tag">즉시 출근 가능</span>
+        <span class="hire-tag green">커피 한 잔 사드립니다</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 에피소드 푸터 -->
+  <div class="episode-footer">
+    <div class="rating-section">
+      <div class="rating-left">
+        <div class="rating-stars">
+          <span class="star">★</span><span class="star">★</span>
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="rating-num">9.97</div>
+        <div class="rating-count">면접관 참여 대기중</div>
+      </div>
+      <button class="rating-btn">별점주기</button>
+    </div>
+    <div class="author-comment">
+      <div class="author-comment-label">작가의 한마디</div>
+      <div class="author-comment-text">
+        만화를 하려고 IT를 시작했는데, IT로 만화를 만들게 됐다. 그리고 지금도 그 일을 하고 싶다.
+      </div>
+    </div>
+    <div class="episode-nav">
+      <a href="portfolio_prologue.html" class="ep-nav-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        이전화 (프롤로그)
+      </a>
+      <a href="portfolio_webtoon.html" class="ep-nav-btn center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        목록
+      </a>
+      <a href="portfolio_dieter.html" class="ep-nav-btn">
+        다음화 (2화)
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
