@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/portfolio_webtoon.html",
+      "permanent": true
+    }
+  ]
+}
