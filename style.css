@@ -1,0 +1,495 @@
+/* =====================================================
+   JINK Portfolio — 공통 스타일시트
+   ===================================================== */
+
+/* ── Paperlogy 웹폰트 ── */
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-1Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-2ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-3Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* ── CSS 변수 ── */
+:root {
+  --primary: #00d564;
+  --primary-light: #e8faf2;
+  --primary-dark: #00a84c;
+  --accent: #ff6b6b;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #999;
+  --border: #e8e8e8;
+  --bg: #ffffff;
+  --bg-sub: #f8f8f8;
+  --bg-dark: #1a1a1a;
+  --star: #f5c518;
+  --width: 960px;
+  --font-sans: 'Noto Sans KR', sans-serif;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-display: 'Paperozi', 'Noto Sans KR', sans-serif;
+  --nav-height: 52px;
+}
+
+/* ── 리셋 ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; height: auto; }
+button { cursor: pointer; font-family: var(--font-sans); }
+
+/* ── 공통 컨테이너 ── */
+.container {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── 헤더 / 네비게이션 ── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  height: var(--nav-height);
+}
+
+.nav-inner {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.15s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text-primary);
+}
+
+.nav-links .nav-cta {
+  padding: 7px 16px;
+  border: 1.5px solid var(--text-primary);
+  border-radius: 6px;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: all 0.15s;
+}
+
+.nav-links .nav-cta:hover {
+  background: var(--text-primary);
+  color: var(--bg);
+}
+
+/* ── 에피소드 배지 ── */
+.episode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-dark);
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.episode-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* ── 도메인 배지 ── */
+.badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+.badge-healthcare  { background: #e8f8f0; color: #00a84c; }
+.badge-fintech     { background: #e8f0ff; color: #3355cc; }
+.badge-o2o         { background: #fff0e8; color: #cc5500; }
+.badge-contents    { background: #f5e8ff; color: #7733cc; }
+.badge-saas        { background: #e8f4ff; color: #0077cc; }
+.badge-ai          { background: #fff8e8; color: #cc8800; }
+.badge-default     { background: var(--bg-sub); color: var(--text-secondary); }
+
+/* ── KPI 카드 ── */
+.kpi-card {
+  background: var(--bg-sub);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.1;
+}
+
+.kpi-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── 섹션 타이틀 ── */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 1em;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+/* ── 히어로 (공통) ── */
+.hero {
+  padding: 48px 0 32px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.hero-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ── 채용 배너 ── */
+.hire-banner {
+  background: var(--bg-dark);
+  padding: 0 40px;
+}
+
+.hire-banner-inner {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.hire-left { display: flex; align-items: center; gap: 14px; }
+.hire-emoji { font-size: 1.8rem; }
+.hire-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.hire-sub { font-size: 0.78rem; color: #aaa; }
+.hire-right { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+
+.hire-tag {
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #444;
+  color: #ccc;
+  white-space: nowrap;
+}
+
+.hire-tag.green {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(0, 213, 100, 0.08);
+}
+
+/* ── 에피소드 네비 ── */
+.episode-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 40px;
+}
+
+.ep-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.ep-nav-btn:hover { background: var(--bg-sub); color: var(--primary); }
+.ep-nav-btn.center { color: var(--text-secondary); font-size: 0.85rem; }
+.ep-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+
+/* ── 별점 ── */
+.rating-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rating-left { display: flex; align-items: center; gap: 10px; }
+.rating-stars { display: flex; gap: 2px; }
+.star { font-size: 1.3rem; color: var(--star); }
+.rating-num { font-size: 1.1rem; font-weight: 900; }
+.rating-count { font-size: 0.78rem; color: var(--text-muted); }
+
+.rating-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: background 0.15s;
+}
+
+.rating-btn:hover { background: #e05555; }
+
+/* ── 작가의 한마디 ── */
+.author-comment {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.author-comment-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.author-comment-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  word-break: keep-all;
+  padding-left: 12px;
+  border-left: 3px solid var(--primary);
+}
+
+/* ── 웹툰 뷰어 ── */
+.viewer-wrap {
+  background: #111;
+  margin: 0 -40px;
+  padding: 20px 0;
+}
+
+.viewer {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.page {
+  display: block;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.page.visible { opacity: 1; transform: none; }
+.page img { display: block; width: 100%; height: auto; }
+.page-gap { height: 6px; background: #0a0a0a; }
+
+/* ── 헤더 (에피소드 페이지용) ── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 16px; }
+.logo { font-size: 1.1rem; font-weight: 900; color: var(--primary); }
+.breadcrumb { font-size: 0.8rem; color: var(--text-muted); }
+.breadcrumb span { color: var(--text-primary); font-weight: 500; }
+
+.back-btn {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+
+.back-btn:hover { color: var(--primary); }
+
+/* ── 공통 버튼 ── */
+.btn-primary {
+  padding: 12px 28px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: background 0.15s;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.btn-primary:hover { background: #333; color: #fff; }
+
+.btn-outline {
+  padding: 12px 28px;
+  background: transparent;
+  color: #1a1a1a;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all 0.15s;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.btn-outline:hover { background: #1a1a1a; color: #fff; }
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  :root { --width: 100%; }
+
+  .container { padding: 0 20px; }
+
+  .nav-inner { padding: 0 20px; }
+
+  .nav-links { gap: 16px; }
+  .nav-links a { font-size: 0.8rem; }
+
+  .hire-banner { padding: 0 20px; }
+  .hire-banner-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  .viewer-wrap { margin: 0 -20px; }
+
+  .header { padding: 0 20px; }
+
+  .episode-nav { padding: 12px 0 32px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .nav-inner { padding: 0 16px; }
+  .nav-links .nav-cta { padding: 5px 12px; }
+}

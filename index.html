@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이진경 — Product Manager Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ── 메인 레이아웃 ── */
+  body {
+    background: #fff;
+    color: #1a1a1a;
+  }
+
+  /* ── 히어로 타이포 영역 ── */
+  .hero-section {
+    border-bottom: 1.5px solid #1a1a1a;
+    padding: 0 40px;
+  }
+
+  .hero-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 0;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+
+  .hero-meta-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero-meta .date {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hero-meta .role {
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .hero-meta .available {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-dark);
+    font-weight: 600;
+  }
+
+  .hero-meta .available::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── 이름 타이포 ── */
+  .hero-name-block {
+    padding: 32px 0 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-name-en {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #1a1a1a;
+    display: block;
+  }
+
+  .hero-name-ko {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-top: 10px;
+    display: block;
+  }
+
+  .hero-name-accent {
+    color: var(--primary);
+  }
+
+  /* ── 한줄 소개 ── */
+  .hero-tagline {
+    padding: 24px 0 28px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .tagline-text {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 560px;
+    word-break: keep-all;
+  }
+
+  .tagline-stats {
+    display: flex;
+    gap: 32px;
+    flex-shrink: 0;
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+
+  .stat-item {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── 본문 그리드 ── */
+  .main-grid {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 0;
+    border-bottom: 1.5px solid #1a1a1a;
+  }
+
+  .main-left {
+    padding: 48px 48px 48px 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .main-right {
+    padding: 48px 0 48px 40px;
+  }
+
+  /* ── 커버레터 ── */
+  .cover-letter {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .cover-letter-body {
+    font-size: 0.95rem;
+    line-height: 2;
+    color: var(--text-secondary);
+    word-break: keep-all;
+  }
+
+  .cover-letter-body p + p {
+    margin-top: 1.2em;
+  }
+
+  .cover-letter-body strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .cover-letter-body .highlight {
+    background: linear-gradient(transparent 60%, rgba(0, 213, 100, 0.25) 60%);
+  }
+
+  /* ── 자기소개 / 방법론 요약 ── */
+  .method-summary {
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+
+  .method-quote {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-primary);
+    word-break: keep-all;
+    border-left: 3px solid var(--primary);
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .method-link {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: gap 0.15s;
+  }
+
+  .method-link:hover { gap: 10px; }
+
+  /* ── 사이드바 — 이력 요약 ── */
+  .sidebar-section {
+    margin-bottom: 36px;
+  }
+
+  .sidebar-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .career-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .career-item:last-child {
+    border-bottom: none;
+  }
+
+  .career-period {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+    letter-spacing: 0.03em;
+  }
+
+  .career-company {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .career-role {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  /* ── 스킬 태그 ── */
+  .skill-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-tag {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--bg-sub);
+    color: var(--text-secondary);
+    font-weight: 500;
+    border: 1px solid var(--border);
+  }
+
+  .skill-tag.primary {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border-color: rgba(0, 213, 100, 0.3);
+  }
+
+  /* ── 도메인 리스트 ── */
+  .domain-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .domain-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+
+  .domain-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+
+  /* ── 연락처 ── */
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+  }
+
+  .contact-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    width: 36px;
+    flex-shrink: 0;
+  }
+
+  .contact-value {
+    color: var(--text-secondary);
+  }
+
+  .contact-value a {
+    color: var(--primary-dark);
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+
+  .contact-value a:hover { color: var(--primary); }
+
+  /* ── 하단 CTA ── */
+  .bottom-cta {
+    border-top: 1.5px solid #1a1a1a;
+    padding: 0 40px;
+  }
+
+  .bottom-cta-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 40px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .cta-text {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 700;
+    color: #1a1a1a;
+    word-break: keep-all;
+  }
+
+  .cta-text span { color: var(--primary); }
+
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .btn-primary {
+    padding: 12px 28px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: background 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: #333; }
+
+  .btn-outline {
+    padding: 12px 28px;
+    background: transparent;
+    color: #1a1a1a;
+    border: 1.5px solid #1a1a1a;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { background: #1a1a1a; color: #fff; }
+
+  /* ── 푸터 ── */
+  .site-footer {
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .site-footer-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 900px) {
+    .main-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .main-left {
+      padding: 40px 0;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .main-right {
+      padding: 40px 0;
+    }
+
+    .hero-tagline {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .tagline-stats {
+      flex-direction: row;
+      gap: 24px;
+    }
+
+    .stat-item { text-align: left; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-section,
+    .main-grid,
+    .bottom-cta { padding-left: 20px; padding-right: 20px; }
+
+    .main-grid { padding: 0 20px; }
+
+    .main-left { padding: 32px 0; }
+    .main-right { padding: 32px 0; }
+
+    .hero-name-en { font-size: clamp(3rem, 16vw, 5rem); }
+
+    .bottom-cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cta-buttons { width: 100%; }
+    .btn-primary, .btn-outline { flex: 1; text-align: center; }
+
+    .site-footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<header class="site-header">
+  <nav class="nav-inner">
+    <a href="index.html" class="nav-logo">JINK</a>
+    <div class="nav-links">
+      <a href="works.html">Works</a>
+      <a href="method.html">Method</a>
+      <a href="docs/jink_portfolio_2025.pdf" class="nav-cta" target="_blank">이력서 PDF</a>
+    </div>
+  </nav>
+</header>
+
+<!-- 히어로 -->
+<section class="hero-section">
+  <div class="hero-inner">
+
+    <div class="hero-meta">
+      <div class="hero-meta-left">
+        <span class="date">2026. 04</span>
+        <span class="role">Product Manager · 15년차</span>
+      </div>
+      <span class="available">구직 중</span>
+    </div>
+
+    <div class="hero-name-block">
+      <span class="hero-name-en">JIN<span class="hero-name-accent">K</span></span>
+      <span class="hero-name-ko">이진경 — Product Manager</span>
+    </div>
+
+    <div class="hero-tagline">
+      <p class="tagline-text">
+        헬스케어·핀테크·O2O·콘텐츠 도메인에서<br>
+        <strong>0→1 신규 서비스</strong>와 <strong>운영 고도화</strong>를 함께 해온 PM입니다.<br>
+        숫자와 현장을 함께 읽고, 팀이 실제로 움직일 수 있는 기획을 만듭니다.
+      </p>
+      <div class="tagline-stats">
+        <div class="stat-item">
+          <div class="stat-num">15<span style="font-size:1rem;color:var(--text-muted)">년</span></div>
+          <div class="stat-label">PM 경력</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">12<span style="font-size:1rem;color:var(--text-muted)">개</span></div>
+          <div class="stat-label">프로젝트</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5<span style="font-size:1rem;color:var(--text-muted)">개</span></div>
+          <div class="stat-label">도메인</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 본문 -->
+<div class="main-grid">
+
+  <!-- 좌측 — 커버레터 + 방법론 -->
+  <div class="main-left">
+
+    <div class="cover-letter">
+      <div class="section-label">Cover Letter</div>
+      <div class="cover-letter-body">
+        <p>
+          저는 <strong>서비스가 실제로 쓰이는 순간</strong>에 집중하는 PM입니다.
+          헬스케어 B2B SaaS의 0→1 구축, 핀테크 마이데이터 플랫폼, O2O 결제·예약 서비스까지
+          다양한 도메인에서 기획부터 출시, 운영 개선까지 직접 이끌어 왔습니다.
+        </p>
+        <p>
+          제가 가장 잘하는 건 <span class="highlight"><strong>복잡한 이해관계를 단순한 우선순위로 정리하는 것</strong></span>입니다.
+          개발팀이 실제로 구현할 수 있는 언어로 기획하고,
+          데이터와 현장 목소리를 동시에 보며 의사결정합니다.
+        </p>
+        <p>
+          지금은 <strong>사람들의 일상에 실질적인 변화를 만드는 팀</strong>에 합류하고 싶습니다.
+          특히 헬스케어·AI 도메인에서의 새로운 도전에 관심이 많습니다.
+        </p>
+        <p style="margin-top: 1.6em; font-size: 0.85rem; color: var(--text-muted);">
+          * 아래 Works에서 프로젝트별 상세 내용을 확인하실 수 있습니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="method-summary">
+      <div class="section-label">업무 방식</div>
+      <div class="method-quote">
+        구축할 때는 전체 스코프를 먼저 확인하고,<br>
+        Phase로 나눠 WBS로 쪼갭니다.<br>
+        운영할 때는 KPI부터 보고, 데이터와 CX를 함께 읽습니다.<br>
+        항상 문제를 정의하기 전에 현장을 먼저 봅니다.
+      </div>
+      <a href="method.html" class="method-link">
+        방법론 자세히 보기 →
+      </a>
+    </div>
+
+  </div>
+
+  <!-- 우측 사이드바 -->
+  <div class="main-right">
+
+    <!-- 연락처 -->
+    <div class="sidebar-section">
+      <div class="section-label">Contact</div>
+      <div class="contact-list">
+        <div class="contact-item">
+          <span class="contact-label">EMAIL</span>
+          <span class="contact-value"><a href="mailto:jink.pm@gmail.com">jink.pm@gmail.com</a></span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">PDF</span>
+          <span class="contact-value"><a href="docs/jink_portfolio_2025.pdf" target="_blank">이력서 다운로드</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 경력 요약 -->
+    <div class="sidebar-section">
+      <div class="section-label">Career</div>
+      <div class="career-item">
+        <div class="career-period">2023 — 현재</div>
+        <div class="career-company">GC케어 / AIA</div>
+        <div class="career-role">PM · Healthcare SaaS B2B</div>
+      </div>
+      <div class="career-item">
+        <div class="career-period">2021 — 2023</div>
+        <div class="career-company">직방</div>
+        <div class="career-role">PM · O2O / Fintech</div>
+      </div>
+      <div class="career-item">
+        <div class="career-period">2019 — 2021</div>
+        <div class="career-company">미래에셋</div>
+        <div class="career-role">PM · Fintech / 마이데이터</div>
+      </div>
+      <div class="career-item">
+        <div class="career-period">2010 — 2019</div>
+        <div class="career-company">한국데이타하우스 외</div>
+        <div class="career-role">기획 · 콘텐츠 / 에이전시</div>
+      </div>
+    </div>
+
+    <!-- 핵심 스킬 -->
+    <div class="sidebar-section">
+      <div class="section-label">Skills</div>
+      <div class="skill-grid">
+        <span class="skill-tag primary">Product Strategy</span>
+        <span class="skill-tag primary">0→1 서비스 기획</span>
+        <span class="skill-tag primary">WBS / 일정관리</span>
+        <span class="skill-tag">데이터 분석</span>
+        <span class="skill-tag">UX 리서치</span>
+        <span class="skill-tag">이해관계자 조율</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">SQL (기초)</span>
+        <span class="skill-tag">OKR / KPI 설계</span>
+      </div>
+    </div>
+
+    <!-- 도메인 -->
+    <div class="sidebar-section">
+      <div class="section-label">Domains</div>
+      <div class="domain-list">
+        <div class="domain-item"><span class="domain-dot"></span>Healthcare · B2B SaaS · AI</div>
+        <div class="domain-item"><span class="domain-dot"></span>Fintech · 마이데이터 · 오픈뱅킹</div>
+        <div class="domain-item"><span class="domain-dot"></span>O2O · 결제 · 예약</div>
+        <div class="domain-item"><span class="domain-dot"></span>콘텐츠 · OTT · 웹툰</div>
+        <div class="domain-item"><span class="domain-dot"></span>생활편의 · 커머스</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 하단 CTA -->
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <p class="cta-text">함께 일하고 싶으시다면 <span>언제든 연락</span>주세요.</p>
+    <div class="cta-buttons">
+      <a href="works.html" class="btn-outline">프로젝트 보기</a>
+      <a href="mailto:jink.pm@gmail.com" class="btn-primary">이메일 보내기</a>
+    </div>
+  </div>
+</section>
+
+<!-- 푸터 -->
+<footer>
+  <div class="site-footer">
+    <div class="site-footer-inner">
+      <span>© 2026 이진경 · JINK</span>
+      <span>Product Manager Portfolio</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

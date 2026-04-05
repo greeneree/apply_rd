@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Works — 이진경 PM 포트폴리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+  /* ── 페이지 헤더 ── */
+  .page-hero {
+    border-bottom: 1.5px solid #1a1a1a;
+    padding: 0 40px;
+  }
+
+  .page-hero-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 48px 0 40px;
+  }
+
+  .page-hero-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .page-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+
+  .page-hero-title span { color: var(--primary); }
+
+  .page-hero-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  /* ── 필터 ── */
+  .filter-bar {
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    position: sticky;
+    top: var(--nav-height);
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(8px);
+    z-index: 90;
+  }
+
+  .filter-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filter-inner::-webkit-scrollbar { display: none; }
+
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+  }
+
+  .filter-btn:hover {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+  }
+
+  .filter-btn.active {
+    background: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #fff;
+  }
+
+  /* ── 프로젝트 목록 ── */
+  .works-section {
+    padding: 0 40px;
+  }
+
+  .works-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+
+  .works-count {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .works-count strong {
+    color: var(--text-primary);
+  }
+
+  /* ── 카드 그리드 ── */
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .work-card {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+  }
+
+  .work-card:hover {
+    border-color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .work-card.hidden {
+    display: none;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .card-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background: var(--bg-sub);
+    flex-shrink: 0;
+  }
+
+  .card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .card-period {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    padding-top: 2px;
+    letter-spacing: 0.03em;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.35;
+    word-break: keep-all;
+  }
+
+  .card-company {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: -6px;
+  }
+
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    word-break: keep-all;
+    flex: 1;
+  }
+
+  .card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .card-arrow {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+    transition: color 0.15s;
+  }
+
+  .work-card:hover .card-arrow {
+    color: var(--primary-dark);
+  }
+
+  /* ── 빈 상태 ── */
+  .works-empty {
+    display: none;
+    text-align: center;
+    padding: 80px 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* ── 푸터 ── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+  }
+
+  .site-footer-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 900px) {
+    .works-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .page-hero, .filter-bar, .works-section, .site-footer { padding-left: 20px; padding-right: 20px; }
+    .works-grid { grid-template-columns: 1fr; gap: 14px; }
+    .page-hero-inner { padding: 36px 0 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<header class="site-header">
+  <nav class="nav-inner">
+    <a href="index.html" class="nav-logo">JINK</a>
+    <div class="nav-links">
+      <a href="works.html" class="active">Works</a>
+      <a href="method.html">Method</a>
+      <a href="docs/jink_portfolio_2025.pdf" class="nav-cta" target="_blank">이력서 PDF</a>
+    </div>
+  </nav>
+</header>
+
+<!-- 페이지 히어로 -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-label">Portfolio</div>
+    <h1 class="page-hero-title">Works<span>.</span></h1>
+    <p class="page-hero-sub">헬스케어 · 핀테크 · O2O · 콘텐츠 · AI — 12개 프로젝트</p>
+  </div>
+</section>
+
+<!-- 필터 바 -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-filter="all">전체</button>
+    <button class="filter-btn" data-filter="healthcare">Healthcare</button>
+    <button class="filter-btn" data-filter="fintech">Fintech</button>
+    <button class="filter-btn" data-filter="o2o">O2O</button>
+    <button class="filter-btn" data-filter="contents">콘텐츠·OTT</button>
+    <button class="filter-btn" data-filter="saas">SaaS</button>
+    <button class="filter-btn" data-filter="ai">AI·LLM</button>
+  </div>
+</div>
+
+<!-- 프로젝트 목록 -->
+<section class="works-section">
+  <div class="works-inner">
+    <div class="works-count"><strong id="count">12</strong>개 프로젝트</div>
+
+    <div class="works-grid" id="worksGrid">
+
+      <!-- GC케어 AIA -->
+      <a class="work-card"
+         href="portfolio_military.html"
+         data-domains="healthcare saas">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_military.png" alt="GC케어" onerror="this.style.display='none';this.parentElement.textContent='🏥'">
+          </div>
+          <span class="card-period">2024 — 현재</span>
+        </div>
+        <div class="card-title">GC케어 AIA</div>
+        <div class="card-company">GC케어 · AIA생명</div>
+        <p class="card-desc">B2B 헬스케어 SaaS 플랫폼. 보험사와 병원 연계 건강관리 서비스 0→1 구축.</p>
+        <div class="card-badges">
+          <span class="badge badge-healthcare">Healthcare</span>
+          <span class="badge badge-saas">SaaS</span>
+          <span class="badge badge-default">B2B</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 군장병 마음건강 -->
+      <a class="work-card"
+         href="portfolio_military.html"
+         data-domains="healthcare saas ai">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_military.png" alt="군장병" onerror="this.style.display='none';this.parentElement.textContent='🪖'">
+          </div>
+          <span class="card-period">2023 — 2024</span>
+        </div>
+        <div class="card-title">군장병 마음건강</div>
+        <div class="card-company">GC케어</div>
+        <p class="card-desc">AI 기반 군 장병 정신건강 관리 SaaS. 국방부 납품 B2B 0→1 신규 서비스 기획.</p>
+        <div class="card-badges">
+          <span class="badge badge-healthcare">Healthcare</span>
+          <span class="badge badge-saas">SaaS</span>
+          <span class="badge badge-ai">AI·LLM</span>
+          <span class="badge badge-default">0→1</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 미래에셋 마이데이터 -->
+      <a class="work-card"
+         href="portfolio_zigbang.html"
+         data-domains="fintech">
+        <div class="card-top">
+          <div class="card-logo">🏦</div>
+          <span class="card-period">2021 — 2022</span>
+        </div>
+        <div class="card-title">미래에셋 마이데이터</div>
+        <div class="card-company">미래에셋증권</div>
+        <p class="card-desc">금융 마이데이터 서비스 기획. 자산 통합조회, 소비 분석, 금융 리포트 서비스 구축.</p>
+        <div class="card-badges">
+          <span class="badge badge-fintech">Fintech</span>
+          <span class="badge badge-default">마이데이터</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 미래에셋 연금나무 -->
+      <a class="work-card"
+         href="portfolio_zigbang.html"
+         data-domains="fintech">
+        <div class="card-top">
+          <div class="card-logo">🌳</div>
+          <span class="card-period">2020 — 2021</span>
+        </div>
+        <div class="card-title">미래에셋 연금나무</div>
+        <div class="card-company">미래에셋생명</div>
+        <p class="card-desc">퇴직연금·개인연금 통합 관리 앱. 연금 수령 시뮬레이션 및 포트폴리오 리밸런싱 기능 기획.</p>
+        <div class="card-badges">
+          <span class="badge badge-fintech">Fintech</span>
+          <span class="badge badge-default">연금</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 직방 월세납부 -->
+      <a class="work-card"
+         href="portfolio_zigbang.html"
+         data-domains="fintech o2o">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_zigbang.png" alt="직방" onerror="this.style.display='none';this.parentElement.textContent='🏠'">
+          </div>
+          <span class="card-period">2022 — 2023</span>
+        </div>
+        <div class="card-title">직방 월세납부</div>
+        <div class="card-company">직방</div>
+        <p class="card-desc">오픈뱅킹 기반 월세 자동납부 서비스. 세입자·집주인 양방향 연동 결제 플로우 기획.</p>
+        <div class="card-badges">
+          <span class="badge badge-fintech">Fintech</span>
+          <span class="badge badge-default">오픈뱅킹</span>
+          <span class="badge badge-o2o">O2O</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 직방 홈픽스 -->
+      <a class="work-card"
+         href="portfolio_zigbang.html"
+         data-domains="o2o">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_zigbang.png" alt="직방" onerror="this.style.display='none';this.parentElement.textContent='🔧'">
+          </div>
+          <span class="card-period">2021 — 2022</span>
+        </div>
+        <div class="card-title">직방 홈픽스</div>
+        <div class="card-company">직방</div>
+        <p class="card-desc">집수리 O2O 플랫폼. 시공사·입주자 매칭 및 결제, 하자보수 프로세스 기획.</p>
+        <div class="card-badges">
+          <span class="badge badge-o2o">O2O</span>
+          <span class="badge badge-default">결제</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 9.81파크 -->
+      <a class="work-card"
+         href="portfolio_981park.html"
+         data-domains="o2o">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_981park.png" alt="9.81파크" onerror="this.style.display='none';this.parentElement.textContent='🏎️'">
+          </div>
+          <span class="card-period">2019 — 2020</span>
+        </div>
+        <div class="card-title">9.81파크</div>
+        <div class="card-company">9.81파크</div>
+        <p class="card-desc">중력 레이싱 테마파크 앱. 예약·결제·랭킹 게이미피케이션 서비스 구축.</p>
+        <div class="card-badges">
+          <span class="badge badge-o2o">O2O</span>
+          <span class="badge badge-default">Gamification</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 지하철 앱 -->
+      <a class="work-card"
+         href="portfolio_subway.html"
+         data-domains="contents">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_subway.png" alt="지하철" onerror="this.style.display='none';this.parentElement.textContent='🚇'">
+          </div>
+          <span class="card-period">2018 — 2019</span>
+        </div>
+        <div class="card-title">지하철 앱</div>
+        <div class="card-company">스타트업</div>
+        <p class="card-desc">지하철 실시간 정보 앱. 광고·프리미엄 구독 수익화 모델 기획 및 운영 고도화.</p>
+        <div class="card-badges">
+          <span class="badge badge-default">생활편의</span>
+          <span class="badge badge-default">수익화</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 다이어터 -->
+      <a class="work-card"
+         href="portfolio_dieter.html"
+         data-domains="healthcare contents">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_dieter.png" alt="다이어터" onerror="this.style.display='none';this.parentElement.textContent='🥗'">
+          </div>
+          <span class="card-period">2017 — 2018</span>
+        </div>
+        <div class="card-title">다이어터</div>
+        <div class="card-company">스타트업</div>
+        <p class="card-desc">식단·운동 기록 기반 다이어트 콘텐츠 커뮤니티. 챌린지 기능 및 콘텐츠 큐레이션 기획.</p>
+        <div class="card-badges">
+          <span class="badge badge-healthcare">Healthcare</span>
+          <span class="badge badge-contents">콘텐츠</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 한국데이타하우스 -->
+      <a class="work-card"
+         href="portfolio_kdh.html"
+         data-domains="contents">
+        <div class="card-top">
+          <div class="card-logo">
+            <img src="images/logo_kdh.png" alt="한국데이타하우스" onerror="this.style.display='none';this.parentElement.textContent='📚'">
+          </div>
+          <span class="card-period">2013 — 2017</span>
+        </div>
+        <div class="card-title">한국데이타하우스</div>
+        <div class="card-company">한국데이타하우스</div>
+        <p class="card-desc">웹툰 플랫폼 구축 및 콘텐츠 유통 기획. 작가·독자 양방향 플랫폼 설계.</p>
+        <div class="card-badges">
+          <span class="badge badge-contents">콘텐츠</span>
+          <span class="badge badge-default">웹툰</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 티빙 -->
+      <a class="work-card"
+         href="portfolio_kdh.html"
+         data-domains="contents">
+        <div class="card-top">
+          <div class="card-logo">📺</div>
+          <span class="card-period">2015 — 2016</span>
+        </div>
+        <div class="card-title">티빙</div>
+        <div class="card-company">CJ ENM</div>
+        <p class="card-desc">OTT 서비스 콘텐츠 기획. 개인화 추천, 채널 편성, 구독 전환율 개선 프로젝트.</p>
+        <div class="card-badges">
+          <span class="badge badge-contents">OTT</span>
+          <span class="badge badge-contents">콘텐츠</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+      <!-- 스탬프 -->
+      <a class="work-card"
+         href="portfolio_981park.html"
+         data-domains="contents">
+        <div class="card-top">
+          <div class="card-logo">🎨</div>
+          <span class="card-period">2011 — 2013</span>
+        </div>
+        <div class="card-title">스탬프</div>
+        <div class="card-company">에이전시</div>
+        <p class="card-desc">에이전시 기반 콘텐츠 제작 조직 관리. PM 역할 내재화 및 프로젝트 운영 체계 수립.</p>
+        <div class="card-badges">
+          <span class="badge badge-default">에이전시</span>
+          <span class="badge badge-default">조직관리</span>
+        </div>
+        <span class="card-arrow">자세히 보기 →</span>
+      </a>
+
+    </div><!-- /works-grid -->
+
+    <div class="works-empty" id="worksEmpty">
+      해당 도메인의 프로젝트가 없습니다.
+    </div>
+
+  </div>
+</div>
+
+<!-- 푸터 -->
+<footer>
+  <div class="site-footer">
+    <div class="site-footer-inner">
+      <span>© 2026 이진경 · JINK</span>
+      <span><a href="index.html" style="color:var(--text-muted);">← 메인으로</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.work-card');
+  const countEl = document.getElementById('count');
+  const emptyEl = document.getElementById('worksEmpty');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      let visible = 0;
+      cards.forEach(card => {
+        const domains = card.dataset.domains || '';
+        const match = filter === 'all' || domains.split(' ').includes(filter);
+        card.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+
+      countEl.textContent = visible;
+      emptyEl.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>

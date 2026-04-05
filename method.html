@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Method — 이진경 PM 포트폴리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+  /* ── 페이지 히어로 ── */
+  .page-hero {
+    border-bottom: 1.5px solid #1a1a1a;
+    padding: 0 40px;
+  }
+
+  .page-hero-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 48px 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+
+  .page-hero-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .page-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #1a1a1a;
+  }
+
+  .page-hero-title span { color: var(--primary); }
+
+  .page-hero-quote {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    word-break: keep-all;
+    border-left: 3px solid var(--primary);
+    padding-left: 20px;
+  }
+
+  /* ── 본문 ── */
+  .method-body {
+    padding: 0 40px;
+  }
+
+  .method-body-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 64px 0;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+  }
+
+  /* ── 사이드 인덱스 ── */
+  .method-index {
+    position: sticky;
+    top: calc(var(--nav-height) + 24px);
+    height: fit-content;
+  }
+
+  .index-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .index-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .index-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .index-item:hover, .index-item.active {
+    color: #1a1a1a;
+  }
+
+  .index-item .index-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--primary);
+    width: 16px;
+    flex-shrink: 0;
+  }
+
+  /* ── 메서드 섹션들 ── */
+  .method-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+
+  .method-section {
+    scroll-margin-top: calc(var(--nav-height) + 24px);
+  }
+
+  .method-section-num {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .method-section-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  .method-section-body {
+    font-size: 0.95rem;
+    line-height: 2.1;
+    color: var(--text-secondary);
+    word-break: keep-all;
+  }
+
+  .method-section-body p + p {
+    margin-top: 1.4em;
+  }
+
+  .method-section-body strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  /* ── 강조 블록 ── */
+  .method-callout {
+    background: #f7f7f7;
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 28px 0;
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--text-primary);
+    word-break: keep-all;
+  }
+
+  .method-callout strong {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── 프로세스 스텝 ── */
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 28px 0;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .process-step:last-child { border-bottom: none; }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content { flex: 1; }
+
+  .step-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .step-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    word-break: keep-all;
+  }
+
+  /* ── 구분선 ── */
+  .method-divider {
+    border: none;
+    border-top: 1.5px solid #1a1a1a;
+    margin: 0;
+  }
+
+  /* ── 하단 네비 ── */
+  .method-bottom-nav {
+    border-top: 1px solid var(--border);
+    padding: 0 40px;
+  }
+
+  .method-bottom-nav-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 40px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .bottom-nav-text {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .bottom-nav-text strong { color: var(--text-primary); }
+
+  /* ── 푸터 ── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+  }
+
+  .site-footer-inner {
+    max-width: var(--width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 900px) {
+    .page-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .method-body-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .method-index {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .index-label { margin: 0; }
+    .index-list { flex-direction: row; flex-wrap: wrap; gap: 4px; }
+    .index-item { border-bottom: none; padding: 4px 10px; border: 1px solid var(--border); border-radius: 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .page-hero, .method-body, .method-bottom-nav, .site-footer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .method-bottom-nav-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<header class="site-header">
+  <nav class="nav-inner">
+    <a href="index.html" class="nav-logo">JINK</a>
+    <div class="nav-links">
+      <a href="works.html">Works</a>
+      <a href="method.html" class="active">Method</a>
+      <a href="docs/jink_portfolio_2025.pdf" class="nav-cta" target="_blank">이력서 PDF</a>
+    </div>
+  </nav>
+</header>
+
+<!-- 페이지 히어로 -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div>
+      <div class="page-hero-label">How I Work</div>
+      <h1 class="page-hero-title">Method<span>.</span></h1>
+    </div>
+    <p class="page-hero-quote">
+      숫자가 가리키는 방향과<br>
+      사람이 말하지 않은 것을<br>
+      함께 읽습니다.
+    </p>
+  </div>
+</section>
+
+<hr class="method-divider">
+
+<!-- 본문 -->
+<div class="method-body">
+  <div class="method-body-inner">
+
+    <!-- 사이드 인덱스 -->
+    <aside class="method-index">
+      <div class="index-label">목차</div>
+      <div class="index-list">
+        <a href="#build" class="index-item active">
+          <span class="index-num">01</span>구축할 때
+        </a>
+        <a href="#operate" class="index-item">
+          <span class="index-num">02</span>운영할 때
+        </a>
+        <a href="#define" class="index-item">
+          <span class="index-num">03</span>문제 정의
+        </a>
+      </div>
+    </aside>
+
+    <!-- 메서드 섹션들 -->
+    <div class="method-sections">
+
+      <!-- 01 구축할 때 -->
+      <section class="method-section" id="build">
+        <div class="method-section-num">01</div>
+        <h2 class="method-section-title">구축할 때</h2>
+        <div class="method-section-body">
+          <p>
+            새로운 서비스를 만들 때 가장 먼저 하는 건
+            <strong>전체 스코프와 기능을 확인하는 것</strong>입니다.
+            무엇을 만들어야 하는지 전체 그림을 보지 않으면,
+            중간에 방향이 흔들리거나 중요한 의존 관계를 놓치게 됩니다.
+          </p>
+          <p>
+            전체를 파악한 뒤엔 <strong>일정 조율 가능 여부</strong>를 봅니다.
+            데드라인이 고정이면 스코프를 조정하고,
+            스코프가 고정이면 일정을 협상합니다.
+            그 기준으로 <strong>Phase 1·2로 나눠</strong> 먼저 출시할 것과
+            이후에 붙일 것을 구분합니다.
+          </p>
+          <p>
+            그 다음은 <strong>WBS로 업무를 쪼개는 것</strong>입니다.
+            기능 단위로 잘게 나누면 누가 무엇을 언제까지 해야 하는지
+            팀 전체가 같은 그림을 보게 됩니다.
+          </p>
+        </div>
+
+        <div class="method-callout">
+          <strong>핵심 원칙</strong>
+          개발팀이 실제로 구현할 수 있는 언어로 정의해야
+          기획이 화면 밖으로 나옵니다.
+          그래서 저는 "이 기능이 DB에서 어떻게 조회되는가"를
+          항상 함께 생각합니다.
+        </div>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">전체 스코프 파악</div>
+              <div class="step-desc">기능 목록 전체를 먼저 나열. 이해관계자 인터뷰 + 유사 서비스 벤치마킹 병행.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Phase 분리</div>
+              <div class="step-desc">반드시 출시 때 있어야 할 것 (MVP)과 이후 단계에서 붙일 것을 구분.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">WBS 작성 & 공유</div>
+              <div class="step-desc">기능 단위 업무 분배. 담당자·기간·의존 관계 명시. 매주 업데이트.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">빠르게 틀리고, 빠르게 고치기</div>
+              <div class="step-desc">프로토타입을 빨리 만들어 개발팀·디자인팀과 검증. 방향이 틀리면 일찍 발견할수록 비용이 적다.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 운영할 때 -->
+      <section class="method-section" id="operate">
+        <div class="method-section-num">02</div>
+        <h2 class="method-section-title">운영할 때</h2>
+        <div class="method-section-body">
+          <p>
+            이미 운영 중인 서비스를 개선할 땐
+            <strong>서비스 목적과 KPI·OKR 기준</strong>으로 시작합니다.
+            "현재 지표가 어느 수준인가"를 먼저 파악하지 않으면
+            어떤 방향으로 개선해야 할지 알 수 없습니다.
+          </p>
+          <p>
+            그 다음엔 <strong>점진적 개선인지 대대적 전환인지</strong>를 판단합니다.
+            지표가 조금씩 떨어지고 있다면 기능 단위 개선으로 충분하지만,
+            핵심 메트릭이 구조적으로 무너져 있다면 서비스 방향 자체를 재검토합니다.
+          </p>
+          <p>
+            데이터와 CX는 항상 동시에 봅니다.
+            숫자만 보면 "왜"가 빠지고,
+            사람 목소리만 들으면 방향이 흔들립니다.
+            <strong>둘을 교차 검증</strong>한 뒤 우선순위를 정리하고,
+            그 다음 이해관계자와 조율합니다.
+          </p>
+        </div>
+
+        <div class="method-callout">
+          <strong>운영 루틴</strong>
+          매주 핵심 지표 리뷰 → 이상 징후 감지 → 원인 가설 수립 →
+          사용자 인터뷰 또는 데이터 딥다이브 → 개선안 도출 →
+          우선순위 협의 → 스프린트 반영.
+        </div>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">KPI 현황 파악</div>
+              <div class="step-desc">목표 대비 현재 수치. 추세 분석 (QoQ, MoM). 이상 지표 식별.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">개선 방향 판단</div>
+              <div class="step-desc">점진적 개선(기능 추가/개선) vs 대대적 전환(UX 리디자인, 비즈니스 모델 변경) 결정.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">데이터 + CX 교차 검증</div>
+              <div class="step-desc">퍼널 분석·로그 분석과 사용자 인터뷰·CS 데이터를 함께 읽는다.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">우선순위 정리 & 조율</div>
+              <div class="step-desc">임팩트 × 구현 난이도 매트릭스로 우선순위 정리. 이해관계자 정렬 후 실행.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 문제 정의 -->
+      <section class="method-section" id="define">
+        <div class="method-section-num">03</div>
+        <h2 class="method-section-title">문제를 정의하기 전에</h2>
+        <div class="method-section-body">
+          <p>
+            항상 문제를 정의하기 전에 <strong>현장을 먼저 봅니다</strong>.
+            데이터는 "무엇이 일어나고 있는가"를 알려주지만,
+            "왜 그런가"는 현장에 있습니다.
+          </p>
+          <p>
+            <strong>숫자가 가리키는 방향</strong>과
+            <strong>사람이 말하지 않은 것</strong>을 함께 읽는 것이
+            제가 문제를 정의하는 방식입니다.
+          </p>
+          <p>
+            사람들은 불편한 것을 항상 말로 표현하지 않습니다.
+            앱을 닫는 행동, 같은 화면을 반복해서 보는 패턴,
+            CS에 올라오지 않지만 조용히 이탈하는 유저 —
+            이런 신호를 읽으려면 데이터 뒤에서 사람을 보는 훈련이 필요합니다.
+          </p>
+        </div>
+
+        <div class="method-callout">
+          <strong>현장에서 배운 것</strong>
+          "유저가 이 버튼을 왜 안 누를까"를 회의실에서 답하려 하면
+          대부분 틀립니다. 직접 써보고, 직접 물어보고,
+          그 다음에 정의합니다.
+        </div>
+      </section>
+
+    </div><!-- /method-sections -->
+  </div>
+</div>
+
+<!-- 하단 네비 -->
+<div class="method-bottom-nav">
+  <div class="method-bottom-nav-inner">
+    <p class="bottom-nav-text">
+      이 방법론이 실제로 어떻게 쓰였는지 —<br>
+      <strong>프로젝트 상세</strong>에서 확인할 수 있습니다.
+    </p>
+    <a href="works.html" class="btn-primary">프로젝트 보기 →</a>
+  </div>
+</div>
+
+<!-- 푸터 -->
+<footer>
+  <div class="site-footer">
+    <div class="site-footer-inner">
+      <span>© 2026 이진경 · JINK</span>
+      <span><a href="index.html" style="color:var(--text-muted);">← 메인으로</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 스크롤에 따른 인덱스 하이라이트
+  const sections = document.querySelectorAll('.method-section');
+  const indexItems = document.querySelectorAll('.index-item');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        indexItems.forEach(item => item.classList.remove('active'));
+        const active = document.querySelector(`.index-item[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
